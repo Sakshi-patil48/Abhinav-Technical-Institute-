@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Lock, Eye, Trash2, Download, X, Copy, Check, Megaphone, ToggleLeft, ToggleRight, ListTodo, BookOpen, Award, LogOut } from 'lucide-react';
+import { Lock, Eye, Trash2, Download, X, Copy, Check, Megaphone, ToggleLeft, ToggleRight, ListTodo, BookOpen, Award, LogOut, CreditCard } from 'lucide-react';
 import SyllabusAdmin from './SyllabusAdmin';
 import CertificateManager from './CertificateManager';
+import FeeReceiptIdCard from './FeeReceiptIdCard';
 import type { Inquiry } from './Contact';
 
 interface AdminDashboardProps {
@@ -17,7 +18,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   
   // Dashboard Tabs
-  const [activeTab, setActiveTab] = useState<'leads' | 'syllabus' | 'certificates' | 'courses' | 'notice'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'syllabus' | 'certificates' | 'courses' | 'notice' | 'receipts'>('leads');
   
   // Notice State
   const [noticeText, setNoticeText] = useState('');
@@ -257,6 +258,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
                   <Megaphone className="h-4 w-4" />
                   <span>Notice Board</span>
                 </button>
+
+                <button
+                  onClick={() => setActiveTab('receipts')}
+                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all ${
+                    activeTab === 'receipts'
+                      ? 'border-orangeAccent text-orangeAccent'
+                      : 'border-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  <CreditCard className="h-4 w-4" />
+                  <span>Fee Receipt & ID Card</span>
+                </button>
               </div>
 
               {/* Tab Panels */}
@@ -454,6 +467,21 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
                     </div>
                     
                     <div className="flex justify-start pt-4 border-t border-slate-100">
+                      <button
+                        onClick={handleLogout}
+                        className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-xl transition-all"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* 6. Fee Receipt & ID Card Generator */}
+                {activeTab === 'receipts' && (
+                  <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                    <FeeReceiptIdCard />
+                    <div className="flex justify-start pt-4 mt-4 border-t border-slate-100">
                       <button
                         onClick={handleLogout}
                         className="px-4 py-2 border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-xl transition-all"

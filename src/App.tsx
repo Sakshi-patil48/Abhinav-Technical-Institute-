@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
+import { LangProvider } from './contexts/LangContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
+import FeeCalculator from './components/FeeCalculator';
+import SkillQuiz from './components/SkillQuiz';
 import AdmissionWizard from './components/AdmissionWizard';
 import WhyUs from './components/WhyUs';
+import PlacementWall from './components/PlacementWall';
 import Gallery from './components/Gallery';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
@@ -24,18 +28,12 @@ function App() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       setCurrentHash(hash);
-      if (hash === '#admin') {
-        setIsAdminOpen(true);
-      }
+      if (hash === '#admin') setIsAdminOpen(true);
     };
 
     window.addEventListener('hashchange', handleHashChange);
     window.addEventListener('popstate', handleHashChange);
-
-    // Initial check
-    if (window.location.hash === '#admin') {
-      setIsAdminOpen(true);
-    }
+    if (window.location.hash === '#admin') setIsAdminOpen(true);
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
@@ -45,19 +43,21 @@ function App() {
 
   const normalizedHash = currentHash.toLowerCase();
 
-  // 1. Secret Super Admin Console Route (#super-admin or #superadmin - Password: 9822725265)
+  // 1. Secret Super Admin Console (no UI button, access via #super-admin, password: 9822725265)
   if (normalizedHash.startsWith('#super-admin') || normalizedHash.startsWith('#superadmin')) {
     return (
-      <SuperAdminDashboard
-        onBackToHome={() => {
-          window.location.hash = '';
-          setCurrentHash('');
-        }}
-      />
+      <LangProvider>
+        <SuperAdminDashboard
+          onBackToHome={() => {
+            window.location.hash = '';
+            setCurrentHash('');
+          }}
+        />
+      </LangProvider>
     );
   }
 
-  // 2. Public Certificate Verification Portal Route (#verify or #verify?id=...)
+  // 2. Certificate Verification Portal (#verify or #verify?id=...)
   if (normalizedHash.startsWith('#verify')) {
     let certId = '';
     if (currentHash.includes('id=')) {
@@ -67,67 +67,64 @@ function App() {
     }
 
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-orange-500 selection:text-white">
-        <Navbar onAdminClick={() => setIsAdminOpen(true)} />
-        <main className="flex-grow">
-          <VerifyCertificate
-            initialId={certId}
-            onBack={() => {
-              window.location.hash = '';
-              setCurrentHash('');
+      <LangProvider>
+        <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-orange-500 selection:text-white">
+          <Navbar onAdminClick={() => setIsAdminOpen(true)} />
+          <main className="flex-grow">
+            <VerifyCertificate
+              initialId={certId}
+              onBack={() => {
+                window.location.hash = '';
+                setCurrentHash('');
+              }}
+            />
+          </main>
+          <WhatsAppWidget />
+          <AdminDashboard
+            isOpen={isAdminOpen}
+            onClose={() => {
+              setIsAdminOpen(false);
+              if (window.location.hash === '#admin') window.location.hash = '';
             }}
           />
+          <Footer />
+        </div>
+      </LangProvider>
+    );
+  }
+
+  // 3. Full Modern Website
+  return (
+    <LangProvider>
+      <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-orange-500 selection:text-white">
+        <Navbar onAdminClick={() => setIsAdminOpen(true)} />
+
+        <main className="flex-grow">
+          <Hero />
+          <About />
+          <Services />
+          <FeeCalculator />
+          <SkillQuiz />
+          <AdmissionWizard />
+          <WhyUs />
+          <PlacementWall />
+          <Gallery />
+          <FAQ />
+          <Contact />
         </main>
-        <WhatsAppWidget />
+
         <AdminDashboard
           isOpen={isAdminOpen}
           onClose={() => {
             setIsAdminOpen(false);
-            if (window.location.hash === '#admin') {
-              window.location.hash = '';
-            }
+            if (window.location.hash === '#admin') window.location.hash = '';
           }}
         />
+
+        <WhatsAppWidget />
         <Footer />
       </div>
-    );
-  }
-
-  // 3. Full Modern Website Layout with all Features
-  return (
-    <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-orange-500 selection:text-white">
-      {/* Navigation Header */}
-      <Navbar onAdminClick={() => setIsAdminOpen(true)} />
-
-      {/* Main Content Layout */}
-      <main className="flex-grow">
-        <Hero />
-        <About />
-        <Services />
-        <AdmissionWizard />
-        <WhyUs />
-        <Gallery />
-        <FAQ />
-        <Contact />
-      </main>
-
-      {/* Admin Dashboard Modal */}
-      <AdminDashboard
-        isOpen={isAdminOpen}
-        onClose={() => {
-          setIsAdminOpen(false);
-          if (window.location.hash === '#admin') {
-            window.location.hash = '';
-          }
-        }}
-      />
-
-      {/* Floating Quick Action Widget */}
-      <WhatsAppWidget />
-
-      {/* Page Footer */}
-      <Footer />
-    </div>
+    </LangProvider>
   );
 }
 
