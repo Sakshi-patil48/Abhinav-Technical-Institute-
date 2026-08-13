@@ -81,7 +81,7 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ onBackToHome 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const clean = password.trim();
-    if (clean === 'superadmin' || clean === '9423488174' || clean === '9822725265' || clean === 'admin123') {
+    if (clean === '9822725265') {
       setIsAuthenticated(true);
       sessionStorage.setItem('abhinav_superadmin_auth', 'true');
       setError('');
