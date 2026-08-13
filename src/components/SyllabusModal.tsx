@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, BookOpen, Download, FileText, CheckCircle, Clock, Award, Phone, Search, ChevronRight } from 'lucide-react';
+import { X, BookOpen, Download, FileText, CheckCircle, Clock, Award, Phone, Search, ChevronRight, MessageCircle } from 'lucide-react';
 import type { Syllabus } from '../types';
 import { INITIAL_SYLLABUS_LIST } from '../data/initialSyllabus';
 
@@ -307,12 +307,12 @@ Website        : https://abhinav-institute.pages.dev
                     </button>
 
                     <a
-                      href={`https://wa.me/919423488174?text=${encodeURIComponent(`Hello Abhinav Technical Institute, I would like to inquire about admission and syllabus for ${activeSyllabus.courseTitle} (${activeSyllabus.courseCode}).`)}`}
+                      href={`https://wa.me/919423488174?text=${encodeURIComponent(`Hello Abhinav Technical Institute, I am reviewing the syllabus for "${activeSyllabus.courseTitle}" (${activeSyllabus.courseCode}) and would like to inquire about admission, eligibility, and next batch timings.`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center px-3.5 py-2.5 rounded-xl font-semibold text-xs border border-emerald-600 text-emerald-700 hover:bg-emerald-50 transition-colors"
+                      className="inline-flex items-center px-4 py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm hover:shadow transition-all"
                     >
-                      <Phone className="h-3.5 w-3.5 mr-1 text-emerald-600" />
+                      <MessageCircle className="h-4 w-4 mr-1.5" />
                       Inquire on WhatsApp
                     </a>
                   </div>

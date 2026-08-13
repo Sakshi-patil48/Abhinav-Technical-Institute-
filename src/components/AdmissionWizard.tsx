@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, GraduationCap, ArrowRight, RefreshCw, Zap, Laptop, Wrench } from 'lucide-react';
+import { CheckCircle, GraduationCap, ArrowRight, RefreshCw, Zap, Laptop, Wrench, MessageCircle } from 'lucide-react';
 
 interface CourseRecommendation {
   name: string;
@@ -288,12 +288,24 @@ const AdmissionWizard: React.FC = () => {
                         </div>
                       </div>
 
-                      <button
-                        onClick={() => handleApply(rec.name)}
-                        className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-xs font-semibold rounded-xl text-white bg-orangeAccent hover:bg-orangeAccent-dark shrink-0 shadow-sm"
-                      >
-                        Apply / Enquire
-                      </button>
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
+                        <a
+                          href={`https://wa.me/919423488174?text=${encodeURIComponent(`Hello Abhinav Technical Institute, I used your course finder and would like to inquire about admission, eligibility, and fees for "${rec.name}".`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 hover:border-emerald-600 transition-all shadow-sm group/wa"
+                        >
+                          <MessageCircle className="h-4 w-4 mr-1.5 text-emerald-600 group-hover/wa:text-white transition-colors" />
+                          WhatsApp
+                        </a>
+
+                        <button
+                          onClick={() => handleApply(rec.name)}
+                          className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-xs font-bold rounded-xl text-white bg-orangeAccent hover:bg-orangeAccent-dark shadow-sm"
+                        >
+                          Apply / Enquire
+                        </button>
+                      </div>
                     </div>
                   );
                 })}

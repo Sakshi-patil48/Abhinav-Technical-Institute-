@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GraduationCap, School, Laptop, Cpu, Zap, Wrench, ShieldCheck, Settings, Truck, ClipboardCheck, FileDown, CheckCircle2, XCircle, BookOpen } from 'lucide-react';
+import { GraduationCap, School, Laptop, Cpu, Zap, Wrench, ShieldCheck, Settings, Truck, ClipboardCheck, FileDown, CheckCircle2, XCircle, BookOpen, MessageCircle } from 'lucide-react';
 import SyllabusModal from './SyllabusModal';
 
 interface ServiceItem {
@@ -316,25 +316,38 @@ const Services: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2">
-                    <button
-                      onClick={() => handleEnquire(service.title)}
-                      className="inline-flex items-center text-sm font-semibold text-orangeAccent hover:text-orangeAccent-dark transition-colors"
+                  <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
+                    <div className="flex items-center justify-between">
+                      <button
+                        onClick={() => handleEnquire(service.title)}
+                        className="inline-flex items-center text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors"
+                      >
+                        Fill Admission Form &rarr;
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setSelectedSyllabusCourse(service.title);
+                          setIsSyllabusOpen(true);
+                        }}
+                        className="inline-flex items-center text-xs font-semibold text-slate-600 hover:text-orange-600 bg-slate-100 hover:bg-orange-50 hover:border-orange-200 px-2.5 py-1 rounded-lg border border-slate-200 transition-all"
+                        title="View & Download Official Course Syllabus"
+                      >
+                        <BookOpen className="h-3.5 w-3.5 mr-1 text-orange-500" />
+                        Syllabus PDF
+                      </button>
+                    </div>
+
+                    {/* WhatsApp Course Inquiry Button */}
+                    <a
+                      href={`https://wa.me/919423488174?text=${encodeURIComponent(`Hello Abhinav Technical Institute, I would like to inquire about admission, batch timings, fees, and syllabus for "${service.title}".`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center px-3 py-2.5 bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white rounded-xl text-xs font-bold border border-emerald-200 hover:border-emerald-600 transition-all shadow-sm group/wa"
                     >
-                      Enquire Now &rarr;
-                    </button>
-                    
-                    <button
-                      onClick={() => {
-                        setSelectedSyllabusCourse(service.title);
-                        setIsSyllabusOpen(true);
-                      }}
-                      className="inline-flex items-center text-xs font-semibold text-slate-600 hover:text-orange-600 bg-slate-100 hover:bg-orange-50 hover:border-orange-200 px-3 py-1.5 rounded-xl border border-slate-200 transition-all"
-                      title="View & Download Official Course Syllabus"
-                    >
-                      <BookOpen className="h-3.5 w-3.5 mr-1.5 text-orange-500" />
-                      Syllabus PDF
-                    </button>
+                      <MessageCircle className="h-4 w-4 mr-1.5 text-emerald-600 group-hover/wa:text-white transition-colors" />
+                      Inquire on WhatsApp
+                    </a>
                   </div>
                 </div>
               </div>
