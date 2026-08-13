@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import {
   ShieldCheck, ShieldX, Award, Search,
-  ArrowLeft, Loader2, Share2, Check
+  Loader2, Share2, Check, Phone, Mail, MapPin,
+  FileCheck, Download, ExternalLink, Printer
 } from 'lucide-react';
 import { INITIAL_CERTIFICATES } from '../data/initialCertificates';
-import type { Certificate } from './CertificateManager';
+import type { Certificate } from '../types';
 
 interface VerifyCertificateProps {
   initialId?: string;
-  onBack: () => void;
+  onBack?: () => void;
 }
 
-const VerifyCertificate: React.FC<VerifyCertificateProps> = ({ initialId = '', onBack }) => {
+const VerifyCertificate: React.FC<VerifyCertificateProps> = ({ initialId = '' }) => {
   const [input, setInput] = useState(initialId);
   const [result, setResult] = useState<Certificate | 'not_found' | null>(null);
   const [loading, setLoading] = useState(false);
@@ -42,12 +43,12 @@ const VerifyCertificate: React.FC<VerifyCertificateProps> = ({ initialId = '', o
         const found: Certificate = await resp.json();
         setResult(found);
         const verifyUrl = `${window.location.origin}${window.location.pathname}#verify?id=${found.id}`;
-        QRCode.toDataURL(verifyUrl, { width: 160, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } })
+        QRCode.toDataURL(verifyUrl, { width: 180, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } })
           .then(setQrUrl);
         setLoading(false);
         return;
       }
-    } catch (err) {
+    } catch {
       // Server unreachable — fallback to localStorage
     }
 
@@ -70,14 +71,14 @@ const VerifyCertificate: React.FC<VerifyCertificateProps> = ({ initialId = '', o
       if (found) {
         setResult(found);
         const verifyUrl = `${window.location.origin}${window.location.pathname}#verify?id=${found.id}`;
-        QRCode.toDataURL(verifyUrl, { width: 160, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } })
+        QRCode.toDataURL(verifyUrl, { width: 180, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } })
           .then(setQrUrl);
       } else {
         setResult('not_found');
       }
 
       setLoading(false);
-    }, 400);
+    }, 350);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -94,192 +95,342 @@ const VerifyCertificate: React.FC<VerifyCertificateProps> = ({ initialId = '', o
     }
   };
 
+  const handlePrintSlip = () => {
+    if (!result || result === 'not_found') return;
+    const printWin = window.open('', '_blank');
+    if (!printWin) return;
+
+    printWin.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Certificate Verification Slip - ${result.id}</title>
+        <style>
+          body { font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; color: #1e293b; }
+          .card { border: 2px solid #0f172a; padding: 30px; border-radius: 12px; max-width: 650px; margin: 0 auto; }
+          .header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px; }
+          .badge { background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 6px; font-weight: bold; display: inline-block; }
+          .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+          .label { font-weight: bold; color: #64748b; }
+          .value { font-weight: 600; color: #0f172a; }
+          .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #64748b; }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <div class="header">
+            <h2 style="margin:0; font-size: 20px;">ABHINAV TECHNICAL INSTITUTE</h2>
+            <p style="margin:4px 0 12px 0; font-size: 12px; color: #64748b;">Industrial Training & Skill Development Education • Jalgaon, Maharashtra</p>
+            <div class="badge">✓ OFFICIAL VERIFICATION SLIP</div>
+          </div>
+          <div class="row"><span class="label">Certificate ID:</span><span class="value">${result.id}</span></div>
+          <div class="row"><span class="label">Student Name:</span><span class="value">${result.studentName}</span></div>
+          <div class="row"><span class="label">Father's Name:</span><span class="value">${result.fatherName}</span></div>
+          <div class="row"><span class="label">Course / Trade:</span><span class="value">${result.course}</span></div>
+          <div class="row"><span class="label">Grade Awarded:</span><span class="value">Grade ${result.grade}</span></div>
+          <div class="row"><span class="label">Training Duration:</span><span class="value">${result.startDate} to ${result.endDate}</span></div>
+          <div class="row"><span class="label">Issue Date:</span><span class="value">${result.issueDate}</span></div>
+          <div class="row"><span class="label">Verification Status:</span><span class="value">${result.isValid ? 'Authentic / Genuine' : 'Revoked'}</span></div>
+          <div class="footer">
+            <p>Verified from the Official Registry of Abhinav Technical Institute.</p>
+            <p>Director: Punjo Patil | Phone: +91 9423488174</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `);
+    printWin.document.close();
+    printWin.focus();
+    setTimeout(() => {
+      printWin.print();
+      printWin.close();
+    }, 300);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-28 pb-20 px-4">
-      <div className="max-w-xl mx-auto">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+      
+      {/* Top Header */}
+      <header className="bg-slate-900 border-b border-slate-800 text-white py-4 px-4 sm:px-8 shadow-md">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center space-x-3">
+            <img
+              src="https://image1.jdomni.in/defaultogimages/v2/A/T/AT.png"
+              alt="Abhinav Technical Institute Logo"
+              className="h-11 w-11 object-contain rounded-xl bg-white p-0.5"
+            />
+            <div>
+              <h1 className="text-base sm:text-lg font-bold font-serif tracking-tight text-white">
+                Abhinav Technical Institute
+              </h1>
+              <p className="text-[11px] text-orange-400 font-semibold tracking-wider uppercase">
+                Official Certificate Verification Portal
+              </p>
+            </div>
+          </div>
 
-        {/* Back button */}
-        <button
-          onClick={onBack}
-          className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-900 mb-8 transition-colors group"
-        >
-          <ArrowLeft className="h-4 w-4 mr-1.5 group-hover:-translate-x-0.5 transition-transform" />
-          Back to Website
-        </button>
+          <div className="flex items-center gap-3 text-xs text-slate-300">
+            <a
+              href="tel:+919423488174"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors border border-slate-700"
+            >
+              <Phone className="h-3.5 w-3.5 text-orange-400" />
+              +91 94234 88174
+            </a>
+          </div>
+        </div>
+      </header>
 
-        {/* Header */}
-        <div className="text-center space-y-4 mb-10">
-          <div className="h-16 w-16 bg-orange-50 rounded-2xl flex items-center justify-center mx-auto border border-orange-100">
-            <Award className="h-8 w-8 text-orangeAccent" />
+      {/* Main Verification Body */}
+      <div className="max-w-2xl w-full mx-auto px-4 py-12 flex-grow">
+        
+        {/* Intro Card */}
+        <div className="text-center space-y-3 mb-8">
+          <div className="h-14 w-14 bg-gradient-to-tr from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center mx-auto text-white shadow-lg shadow-orange-500/20">
+            <Award className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 font-serif">Certificate Verification</h1>
-            <p className="text-slate-500 text-sm mt-1">
-              Enter a Certificate ID or scan the QR code to verify its authenticity.
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif tracking-tight">
+              Online Certificate Verification
+            </h2>
+            <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
+              Scan the QR Code on your physical certificate or enter your Certificate Registration ID below to verify authenticity.
             </p>
-          </div>
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-slate-400 bg-slate-100 px-3 py-1.5 rounded-full">
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-            Abhinav Technical Institute — Official Verification Portal
           </div>
         </div>
 
-        {/* Search Form */}
-        <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
-          <div className="relative flex-grow">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-            <input
-              type="text"
-              value={input}
-              onChange={e => setInput(e.target.value.toUpperCase())}
-              placeholder="e.g. ATI-2024-123456"
-              className="w-full pl-11 pr-4 py-3.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-orangeAccent focus:ring-1 focus:ring-orangeAccent font-mono bg-white shadow-sm"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading || !input.trim()}
-            className="px-5 py-3 bg-orangeAccent hover:bg-orangeAccent-dark text-white text-sm font-semibold rounded-xl shadow-sm disabled:bg-slate-200 disabled:text-slate-400 transition-all shrink-0"
-          >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Verify'}
-          </button>
-        </form>
+        {/* Search Bar */}
+        <div className="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-200 mb-4">
+          <form onSubmit={handleSubmit} className="flex gap-2">
+            <div className="relative flex-grow">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <input
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value.toUpperCase())}
+                placeholder="Enter Certificate ID (e.g. ATI-2024-884920)"
+                className="w-full pl-10 pr-3 py-3 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 font-mono text-slate-900"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm disabled:bg-slate-200 disabled:text-slate-400 transition-all shrink-0 flex items-center gap-1.5"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Verifying...</span>
+                </>
+              ) : (
+                <>
+                  <FileCheck className="h-4 w-4" />
+                  <span>Verify</span>
+                </>
+              )}
+            </button>
+          </form>
+        </div>
 
-        {/* Loading */}
+        {/* Quick Demo Search Chips */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 text-[11px] text-slate-400">
+          <span>Sample verified IDs:</span>
+          {['ATI-2024-884920', 'ATI-2024-419203', 'ATI-2025-103984'].map((sampleId) => (
+            <button
+              key={sampleId}
+              onClick={() => {
+                setInput(sampleId);
+                verifyCert(sampleId);
+              }}
+              className="px-2.5 py-0.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-orange-600 hover:border-orange-200 font-mono transition-colors"
+            >
+              {sampleId}
+            </button>
+          ))}
+        </div>
+
+        {/* Result: Loading */}
         {loading && (
-          <div className="text-center py-12 text-slate-400 space-y-3">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto text-orangeAccent" />
-            <p className="text-sm font-medium">Checking certificate registry…</p>
+          <div className="text-center py-16 text-slate-400 space-y-3 bg-white rounded-3xl border border-slate-200 shadow-sm">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto text-orange-600" />
+            <p className="text-sm font-semibold text-slate-700">Verifying with Institute Registry...</p>
+            <p className="text-xs text-slate-400">Authenticating digital signature and student record</p>
           </div>
         )}
 
-        {/* Result: VALID */}
+        {/* Result: GENUINE CERTIFICATE */}
         {!loading && result && result !== 'not_found' && (
-          <div className="space-y-4">
-            {/* Status banner */}
+          <div className="space-y-4 animate-fadeIn">
+            
+            {/* Status Banner */}
             <div className={`p-5 rounded-2xl border-2 flex items-start gap-4 ${
               result.isValid
-                ? 'bg-emerald-50 border-emerald-200'
-                : 'bg-red-50 border-red-200'
+                ? 'bg-emerald-50/90 border-emerald-300 text-emerald-900 shadow-sm'
+                : 'bg-rose-50 border-rose-300 text-rose-900 shadow-sm'
             }`}>
-              <div className={`p-3 rounded-xl shrink-0 ${result.isValid ? 'bg-emerald-100' : 'bg-red-100'}`}>
+              <div className={`p-3 rounded-2xl shrink-0 ${result.isValid ? 'bg-emerald-100' : 'bg-rose-100'}`}>
                 {result.isValid
-                  ? <ShieldCheck className="h-7 w-7 text-emerald-600" />
-                  : <ShieldX className="h-7 w-7 text-red-500" />
+                  ? <ShieldCheck className="h-8 w-8 text-emerald-600" />
+                  : <ShieldX className="h-8 w-8 text-rose-600" />
                 }
               </div>
-              <div>
-                <h2 className={`text-lg font-bold font-serif ${result.isValid ? 'text-emerald-800' : 'text-red-800'}`}>
-                  {result.isValid ? '✓ Genuine Certificate Verified' : '✗ Certificate Has Been Revoked'}
-                </h2>
-                <p className={`text-xs mt-1 ${result.isValid ? 'text-emerald-700' : 'text-red-600'}`}>
+              <div className="flex-grow">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className={`text-lg font-bold font-serif ${result.isValid ? 'text-emerald-900' : 'text-rose-900'}`}>
+                    {result.isValid ? '✓ Genuine Verified Certificate' : '✗ Certificate Has Been Revoked'}
+                  </h3>
+                  <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${
+                    result.isValid ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'
+                  }`}>
+                    {result.isValid ? 'Active & Valid' : 'Revoked'}
+                  </span>
+                </div>
+                <p className="text-xs mt-1 leading-relaxed text-slate-600">
                   {result.isValid
-                    ? 'This certificate is authentic and recognized by Abhinav Technical Institute, Jalgaon.'
-                    : 'This certificate has been marked invalid. Please contact the institute for clarification.'}
+                    ? 'This certificate is authentic, officially registered, and recognized by Abhinav Technical Institute, Jalgaon.'
+                    : 'This certificate has been marked invalid or revoked in the central registry.'}
                 </p>
               </div>
             </div>
 
-            {/* Certificate Details Card */}
-            <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
-              {/* Card header strip */}
-              <div className="bg-slate-900 px-6 py-3 flex items-center justify-between">
-                <span className="text-white text-xs font-bold font-mono tracking-widest">{result.id}</span>
-                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full ${
-                  result.isValid ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'
-                }`}>
-                  {result.isValid ? 'Valid' : 'Revoked'}
-                </span>
+            {/* Official Credential Card */}
+            <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+              
+              {/* Card Header Strip */}
+              <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-6 py-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Registration Number</span>
+                  <span className="text-white text-sm font-bold font-mono tracking-wider">{result.id}</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Issue Date</span>
+                  <span className="text-orange-300 text-xs font-bold font-mono">{result.issueDate}</span>
+                </div>
               </div>
 
-              {/* Details grid */}
+              {/* Student Credential Grid */}
               <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Student Name</span>
-                  <span className="text-base font-bold text-slate-900">{result.studentName}</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Student / Candidate Name</span>
+                  <span className="text-base font-bold text-slate-900 block">{result.studentName}</span>
                 </div>
+
                 <div>
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Father's / Guardian's Name</span>
-                  <span className="text-base font-bold text-slate-900">{result.fatherName}</span>
+                  <span className="text-base font-bold text-slate-900 block">{result.fatherName}</span>
                 </div>
-                <div className="sm:col-span-2">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Course / Trade Completed</span>
-                  <span className="text-base font-bold text-slate-900">{result.course}</span>
+
+                <div className="sm:col-span-2 bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Certified Course / Trade</span>
+                  <span className="text-base font-bold text-orange-950 block">{result.course}</span>
+                  {result.remarks && (
+                    <span className="text-xs text-slate-500 italic mt-1 block">Specialization: {result.remarks}</span>
+                  )}
                 </div>
+
                 <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Grade Awarded</span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 border border-orange-200 text-orangeAccent font-bold rounded-lg text-sm">
-                    <Award className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Academic Grade</span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 border border-orange-200 text-orange-700 font-bold rounded-xl text-sm">
+                    <Award className="h-4 w-4 text-orange-600" />
                     Grade {result.grade}
                   </span>
                 </div>
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Issue Date</span>
-                  <span className="text-sm font-bold text-slate-900">{result.issueDate}</span>
-                </div>
+
                 <div>
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Training Period</span>
-                  <span className="text-sm font-bold text-slate-900">{result.startDate} – {result.endDate}</span>
+                  <span className="text-xs font-bold text-slate-800 block mt-1">{result.startDate} – {result.endDate}</span>
                 </div>
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Issued By</span>
-                  <span className="text-sm font-bold text-slate-900">Punjo Patil — Director</span>
-                  <span className="block text-[11px] text-slate-500">Abhinav Technical Institute, Jalgaon</span>
+
+                <div className="sm:col-span-2 pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Issuing Authority</span>
+                    <span className="text-xs font-bold text-slate-900 block">Punjo Patil — Director</span>
+                    <span className="text-[11px] text-slate-500">Abhinav Technical Institute, Jalgaon</span>
+                  </div>
+                  <div className="p-2 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-1">
+                    <ShieldCheck className="h-4 w-4" />
+                    Govt. Regd.
+                  </div>
                 </div>
               </div>
 
-              {/* QR + Share */}
-              {qrUrl && (
-                <div className="border-t border-slate-100 px-6 py-5 flex flex-col sm:flex-row items-center gap-5">
-                  <img src={qrUrl} alt="QR Code" className="w-28 h-28 border-4 border-slate-100 rounded-xl p-1 shrink-0" />
-                  <div className="flex-grow text-center sm:text-left">
-                    <p className="font-bold text-slate-900 text-sm">Share Verification Link</p>
-                    <p className="text-xs text-slate-500 mt-1 mb-3">
-                      Send this link or QR to anyone for instant digital verification.
-                    </p>
+              {/* QR Code & Share / Print Actions */}
+              <div className="bg-slate-50 border-t border-slate-100 p-5 flex flex-col sm:flex-row items-center gap-5">
+                {qrUrl && (
+                  <img
+                    src={qrUrl}
+                    alt="Certificate Verification QR Code"
+                    className="w-28 h-28 bg-white border-2 border-slate-200 rounded-2xl p-1 shrink-0 shadow-sm"
+                  />
+                )}
+                
+                <div className="flex-grow space-y-2 text-center sm:text-left">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                    Digital Verification & Sharing
+                  </h4>
+                  <p className="text-xs text-slate-500">
+                    Scan or share this link to instantly verify this credential from any smartphone.
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
                     <button
                       onClick={handleShare}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-all"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all shadow-sm"
                     >
                       {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Share2 className="h-3.5 w-3.5" />}
                       {copied ? 'Link Copied!' : 'Copy Verification Link'}
                     </button>
+
+                    <button
+                      onClick={handlePrintSlip}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 transition-all shadow-sm"
+                    >
+                      <Printer className="h-3.5 w-3.5 text-slate-500" />
+                      Print Verification Slip
+                    </button>
                   </div>
                 </div>
-              )}
+              </div>
+
             </div>
 
-            {/* Institute seal */}
-            <div className="flex items-center gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-              <img src="https://image1.jdomni.in/defaultogimages/v2/A/T/AT.png" alt="Institute Logo"
-                className="h-10 w-10 object-contain rounded-lg bg-white p-0.5 border border-slate-100" />
-              <div>
-                <p className="text-xs font-bold text-slate-900">Abhinav Technical Institute of Industrial Training</p>
-                <p className="text-[10px] text-slate-500">Navi Peth Jalgaon, Maharashtra 425001 · Ph: +91 94234 88174</p>
-              </div>
-            </div>
           </div>
         )}
 
         {/* Result: NOT FOUND */}
         {!loading && result === 'not_found' && (
-          <div className="text-center py-12 space-y-4 bg-red-50 rounded-2xl border-2 border-red-200 px-6">
-            <div className="h-16 w-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto">
-              <ShieldX className="h-8 w-8 text-red-500" />
+          <div className="text-center py-12 space-y-4 bg-rose-50 rounded-3xl border-2 border-rose-200 p-6 animate-fadeIn">
+            <div className="h-14 w-14 bg-rose-100 rounded-2xl flex items-center justify-center mx-auto text-rose-600">
+              <ShieldX className="h-8 w-8" />
             </div>
-            <h3 className="font-bold text-red-800 text-lg font-serif">Certificate Not Found</h3>
-            <p className="text-red-600 text-sm">
-              No certificate matching <span className="font-mono font-bold">"{input}"</span> was found in our registry.
-              This may indicate the ID is incorrect or the certificate was not issued by us.
-            </p>
-            <p className="text-xs text-red-500">
-              If you believe this is an error, please contact us at{' '}
-              <a href="tel:+919423488174" className="underline font-semibold">+91 94234 88174</a>.
+            <div>
+              <h3 className="font-bold text-rose-900 text-lg font-serif">Certificate Not Found</h3>
+              <p className="text-rose-700 text-xs sm:text-sm mt-1 max-w-md mx-auto">
+                No certificate matching <strong className="font-mono bg-white px-1.5 py-0.5 rounded border border-rose-200">"{input}"</strong> was found in the official registry.
+              </p>
+            </div>
+            <p className="text-xs text-slate-500">
+              Please double check the ID format or contact the administrative office at{' '}
+              <a href="tel:+919423488174" className="underline font-bold text-slate-800">+91 94234 88174</a>.
             </p>
           </div>
         )}
 
       </div>
+
+      {/* Official Footer */}
+      <footer className="bg-slate-900 text-slate-400 py-8 px-4 sm:px-8 border-t border-slate-800 text-xs">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+          <div>
+            <div className="font-bold text-white font-serif text-sm">Abhinav Technical Institute</div>
+            <p className="text-[11px] text-slate-400 mt-0.5">Mansingh Market, Near Z P Road, Navi Peth Jalgaon, Maharashtra 425001</p>
+          </div>
+          <div className="text-[11px] text-slate-500">
+            © {new Date().getFullYear()} Abhinav Technical Institute • Official Registry
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 };
