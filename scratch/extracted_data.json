@@ -1,0 +1,3398 @@
+{
+  "cartInfo": {
+    "orderId": "",
+    "cartInfo": {},
+    "cartResults": {}
+  },
+  "staticData": {
+    "appKey": "jdomni",
+    "baseUrl": "https://demowebsite169523620777245084.yourownwebsite.in",
+    "isMobile": false,
+    "countryId": 100,
+    "isdCode": 91,
+    "isNonIndian": false,
+    "supplierId": 77245084,
+    "outletDetails": {
+      "results": {
+        "account_mongo_id": "JD60c9f6ccf552c2920b136c86",
+        "appLink": "",
+        "isplaystorelink": "",
+        "storeId": "demowebsite169523620777245084",
+        "notificationNumber": [
+          "9423488174"
+        ],
+        "notificationEmail": [
+          "abhinav.prp@gmail.com"
+        ],
+        "showLeftMenu": 0,
+        "showFeaturedProduct": 0,
+        "showFeaturedMrp": 0,
+        "showFeaturedCategory": 1,
+        "isallowcod": true,
+        "isAllowPayPal": false,
+        "isEmailMandatoryForOnlineOrder": false,
+        "isMobileMandatoryForEnquiry": true,
+        "isEmailMandatoryForEnquiry": false,
+        "isCartAddButtonEnabled": false,
+        "deliveryCharges": 0,
+        "isCaptureGstinOnline": false,
+        "hideStickyFooterText": true,
+        "customCheckoutMsg": "",
+        "isEnabledOnlinePayment": true,
+        "onlinePaymentMode": "jdpay",
+        "isDemo": 0,
+        "outletid": "JD60c9f6ccf552c2920b136c85",
+        "outletname": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education",
+        "address": "Mansingh Market,Near Railway Station/ Near Ramnivas Hotel,Z P Road",
+        "city": "Jalgaon",
+        "pincode": "425001",
+        "state": "Maharashtra",
+        "email": "abhinav.prp@gmail.com",
+        "area": "Navi Peth Jalgaon",
+        "landmark": "",
+        "street": "",
+        "domainName": "",
+        "activationStatus": "DONE",
+        "tobePaid": 1,
+        "mobile": "9423488174",
+        "alternate_number": "",
+        "landline": "",
+        "compaddr": "Mansingh Market,Near Railway Station/ Near Ramnivas Hotel,Z P Road",
+        "companyname": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education",
+        "hoursofoperation": "09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|Closed~-",
+        "deliveryduration": 2,
+        "supid": 77245084,
+        "contactperson": "Punjo Patil",
+        "storeid": "demowebsite169523620777245084",
+        "logo": "",
+        "latitude": 21.016950186044,
+        "longitude": 75.566392,
+        "set_docid": "9999PX257.X257.100521174144.M3K2DC",
+        "d_mobile": "",
+        "templates": {
+          "doctor": "",
+          "product/service": "424",
+          "restaurant": ""
+        },
+        "country": "India",
+        "countryCode": "IN",
+        "currencyCode": "INR",
+        "enableServiceWorker": 0,
+        "isdCode": 91,
+        "enableProductSmartFill": false,
+        "showOnlineBooking": false,
+        "sellOnlineInBulk": false,
+        "notesInCheckout": false,
+        "isEnabledJdPay": true,
+        "showAddBtn": false,
+        "kycStatus": null,
+        "selectedVerticalsIds": "424",
+        "selectedVerticals": "Educational Institutions",
+        "detailPageButtons": "both",
+        "webListingPageSettings": {
+          "viewType": "grid",
+          "showAddToCartBtn": "false",
+          "showNetWeight": "false",
+          "showVariantDetails": "true",
+          "showVariantDetailsOn": "hover"
+        },
+        "mobileListingPageSettings": {
+          "viewType": "grid",
+          "showAddToCartBtn": "false",
+          "showNetWeight": "false",
+          "showVariantDetails": "false",
+          "subCatViewType": "grid"
+        },
+        "vendor_language": "/en/en",
+        "websiteLang": "/en/en",
+        "disclaimerHtml": null
+      }
+    },
+    "omniPath": "https://www.jdomni.com",
+    "version": null,
+    "isDoctor": false,
+    "isRestaurant": false,
+    "outletCount": 1,
+    "outlets": [
+      {
+        "OUTLET_ID": "JD60c9f6ccf552c2920b136c85",
+        "ACCOUNT_MONGO_ID": "JD60c9f6ccf552c2920b136c86",
+        "OUTLET_NAME": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education",
+        "LATITUDE": 21.016950186044,
+        "LONGITUDE": 75.566392,
+        "HOURS_OF_OPERATION": "09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|09:00-18:00~-|Closed~-",
+        "DELIVERY_TIME_GAP": 2,
+        "ADDRESS": "Mansingh Market,Near Railway Station/ Near Ramnivas Hotel,Z P Road",
+        "CITY": "Jalgaon",
+        "PINCODE": "425001",
+        "EMAIL": "abhinav.prp@gmail.com",
+        "MOBILE_NO": "9423488174",
+        "ALTERNATE_NO": "",
+        "STATE": "Maharashtra",
+        "AREA": "Navi Peth Jalgaon",
+        "COMPANY_NAME": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education",
+        "IS_DEFAULT": 1
+      }
+    ],
+    "verticalId": 424,
+    "verticalDomain": "https://demowebsite169523620777245084.yourownwebsite.in",
+    "isChemistVertical": false,
+    "outletInfo": [
+      "JD60c9f6ccf552c2920b136c85",
+      "JD60c9f6ccf552c2920b136c86",
+      "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education",
+      "Navi Peth Jalgaon",
+      "Jalgaon",
+      "9423488174",
+      null
+    ],
+    "jdCMSPage": false,
+    "mode": "preview",
+    "isAdminThemeUser": false,
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.8972",
+    "isWebpSupported": false,
+    "domainNameOriginal": "https://demowebsite169523620777245084.yourownwebsite.in",
+    "sessionId": "xG_sa8Y-zeFfTxEZWV2WQQqYM2-JM_Kk",
+    "userInfo": {},
+    "themeId": 71678689,
+    "storeId": "demowebsite169523620777245084",
+    "videoAutoPlay": 1,
+    "themeVersion": 1748064604000,
+    "countryList": [],
+    "clientLocation": {},
+    "showCartButton": true,
+    "isProduction": true,
+    "lazyLoadContentBlocks": true,
+    "isJdShop": null,
+    "supplierType": "OMNISTANDARD",
+    "disableSinglePage": 0,
+    "appImgIcon": null,
+    "walkthroughObj": null,
+    "aboutUsObj": {},
+    "isOwnerStaff": null,
+    "protocol": "https://",
+    "seoData": {
+      "metaTitle": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education - Top Educational Institution in Navi Peth Jalgaon, Jalgaon, Maharashtra, India",
+      "metaDescription": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education is a top and well known Educational Institution in Navi Peth Jalgaon, Jalgaon and also known for Colleges, Vocational Course Training Centres, Online Computer Training Institutes, Institutes and Technical Institutes. Get access to address, contact number, photos, directions, working hours and services of Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education, Navi Peth Jalgaon, Jalgaon.",
+      "metaKeywords": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education Navi Peth Jalgaon Jalgaon, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education contact number, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education address, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education direction, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education photos, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education official website link, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education working hours, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education services, Colleges Navi Peth Jalgaon Jalgaon, Vocational Course Training Centres Navi Peth Jalgaon Jalgaon, Online Computer Training Institutes Navi Peth Jalgaon Jalgaon, Institutes Navi Peth Jalgaon Jalgaon, Technical Institutes Navi Peth Jalgaon Jalgaon and Technical Training For Electrician Trade Navi Peth Jalgaon Jalgaon",
+      "ogUrl": "https://demowebsite169523620777245084.yourownwebsite.in",
+      "defaultBannerSeo": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education - Educational Institution in Navi Peth Jalgaon, Jalgaon"
+    },
+    "isOffersPage": false,
+    "offersProps": null,
+    "appDetails": {
+      "success": false,
+      "appStoreLink": ""
+    },
+    "vendorLeftMenu": null,
+    "contentBlockHash": "c9320ea9ede49a409b92",
+    "docId": "9999PX257.X257.100521174144.M3K2DC",
+    "isOnlineOrderAllowed": true,
+    "isDemo": 0,
+    "resellerDomainName": "www.jdomni.com",
+    "storeDomainName": "yourownwebsite.in",
+    "resellerType": "jdYOW",
+    "isPreviewDomain": false,
+    "themeDemo": 0,
+    "omniServerUrl": "https://www.jdomni.com",
+    "paidStatus": 1,
+    "outletId": "JD60c9f6ccf552c2920b136c85",
+    "forScreenshot": false,
+    "storeReady": false,
+    "hideStickyFooterText": null,
+    "showBookAppointment": true,
+    "isRestaurantActive": true,
+    "isRestaurantRegistered": true,
+    "isRestaurantWebsiteActive": true,
+    "isOldUnpaid": false,
+    "shortUrl": "99E14BMU"
+  },
+  "modalInfo": {
+    "visibleModals": [],
+    "leftPanelOpen": false,
+    "serviceBlockTitle": ""
+  },
+  "contentBlockInfo": {
+    "contentBlockIds": [
+      952583232,
+      952583233,
+      952583234,
+      952583235,
+      952583236,
+      952583237,
+      952583238,
+      952583239,
+      952583231
+    ],
+    "showNotificationCard": true,
+    "showNotificationBar": false,
+    "data": {
+      "952583231": {
+        "id": 952583231,
+        "pageType": "",
+        "blockRefId": 407589321,
+        "referenceId": 438929219,
+        "type": "notification",
+        "template": "notification1",
+        "cssFilePath": "static-layouts/notification",
+        "blockData": {
+          "data": {
+            "commonData": {
+              "scrollEffect": "none-effect"
+            },
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "type": "image",
+                            "attrs": {},
+                            "class": "",
+                            "style": {},
+                            "imgSrc": "https://image3.jdomni.in/jdomni_email/headphones_1.png",
+                            "seoObj": {},
+                            "imgClass": "",
+                            "holderClass": "",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            }
+                          }
+                        ],
+                        "class": "",
+                        "style": {}
+                      }
+                    ],
+                    "type": "background",
+                    "attrs": {},
+                    "class": " change-color clearfix",
+                    "style": {
+                      "borderColor": "rgba(253, 206, 177, 1)",
+                      "borderStyle": "none",
+                      "borderWidth": "",
+                      "borderRadius": "8px 0px 0px 8px",
+                      "backgroundColor": "rgba(253, 206, 177, 1)"
+                    },
+                    "eleKey": "left-bg-holder",
+                    "holderClass": " col-md-4 img-holder primary-btn-color-non-imp add-image",
+                    "animationObj": {}
+                  },
+                  {
+                    "rows": [
+                      {
+                        "text": "Contact Us",
+                        "type": "text",
+                        "attrs": {},
+                        "class": " font-size-20 semi-bold",
+                        "style": {
+                          "color": "rgb(58, 58, 58)",
+                          "minHeight": "auto"
+                        },
+                        "seoObj": {},
+                        "tagName": "",
+                        "holderClass": "",
+                        "animationObj": {
+                          "data-a-duration": "1.2",
+                          "data-a-everytime": "true"
+                        },
+                        "hoverStyleId": ""
+                      },
+                      {
+                        "text": "<div><a class='phoneNo-link' href='tel:+919423488174'>+91-9423488174</a></div><div><span><a class='alternateNo-link' href='tel:02572220036'>0257-2220036</a></span></div>",
+                        "type": "text",
+                        "attrs": {},
+                        "class": "para-1 contact-mob font-size-16 regular",
+                        "style": {
+                          "color": "rgba(47, 47, 47, 1)",
+                          "minHeight": "auto",
+                          "fontFamily": "Hind Madurai",
+                          "lineHeight": "1.4",
+                          "borderColor": "rgb(58, 58, 58)",
+                          "borderStyle": "none",
+                          "borderWidth": "0px",
+                          "borderRadius": "0px",
+                          "letterSpacing": 0,
+                          "backgroundColor": "rgba(0, 0, 0, 0)"
+                        },
+                        "seoObj": {},
+                        "tagName": "jdCmsTagContactNo",
+                        "holderClass": "",
+                        "animationObj": {},
+                        "hoverStyleId": ""
+                      },
+                      {
+                        "text": "Mail Us",
+                        "type": "text",
+                        "attrs": {},
+                        "class": " semi-bold font-size-20",
+                        "style": {
+                          "color": "rgb(58, 58, 58)",
+                          "minHeight": "auto"
+                        },
+                        "seoObj": {},
+                        "tagName": "",
+                        "holderClass": "",
+                        "animationObj": {
+                          "data-a-duration": "1.2",
+                          "data-a-everytime": "true"
+                        },
+                        "hoverStyleId": ""
+                      },
+                      {
+                        "text": "<div>abhinav.prp@gmail.com</div>",
+                        "type": "text",
+                        "attrs": {},
+                        "class": "para-1 contact-mail font-size-16 regular",
+                        "style": {
+                          "color": "rgba(47, 47, 47, 1)",
+                          "minHeight": "auto",
+                          "fontFamily": "Hind Madurai",
+                          "lineHeight": "1.4",
+                          "borderColor": "rgb(58, 58, 58)",
+                          "borderStyle": "none",
+                          "borderWidth": "0px",
+                          "borderRadius": "0px",
+                          "letterSpacing": 0,
+                          "backgroundColor": "rgba(0, 0, 0, 0)"
+                        },
+                        "seoObj": {},
+                        "tagName": "jdCmsTagEmail",
+                        "holderClass": "",
+                        "animationObj": {},
+                        "hoverStyleId": ""
+                      }
+                    ],
+                    "type": "background",
+                    "attrs": {
+                      "subtype": "contactHolder"
+                    },
+                    "class": " change-color content-1 paddingLR0",
+                    "style": {
+                      "borderRadius": "0px 8px 8px 0px",
+                      "backgroundColor": "rgb(255, 255, 255)"
+                    },
+                    "eleKey": "right-bg-holder",
+                    "subType": "contactHolder",
+                    "holderClass": " col-md-8 clearfix contact-holder",
+                    "animationObj": {}
+                  }
+                ],
+                "class": " col-md-12 notification-container",
+                "style": {},
+                "eleKey": "notification-container"
+              }
+            ],
+            "type": "notification",
+            "attrs": {
+              "transparency_value": "0.00"
+            },
+            "class": " clearfix bootstrap-iso notification1 padding0",
+            "style": {},
+            "seoObj": {},
+            "webImg": "",
+            "mobileImg": "",
+            "holderClass": " notification notification1 content-align-right",
+            "animationObj": {}
+          }
+        },
+        "contentBlockId": 952583231,
+        "originialType": "notification",
+        "isWufooForm": false
+      },
+      "952583232": {
+        "id": 952583232,
+        "pageType": "",
+        "blockRefId": 407589322,
+        "referenceId": 438929211,
+        "type": "services",
+        "template": "service1",
+        "cssFilePath": "services",
+        "blockData": {
+          "data": {
+            "data": [
+              {
+                "image": {
+                  "imgSrc": "https://image3.jdomni.in/library/47/A3/A8/1B8D1518D826F5505A202DAC0B_1496774183519_cropped_450X450.jpeg",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Colleges",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "We are one of the best colleges and are committed to excellence in knowledge and education.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                }
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image1.jdomni.in/library/8E/8D/98/DA3FC68BBAB35DEB1490EDB82D_1496334972139_cropped_450X450.jpeg",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Institutes",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "Our institutes offers the best courses that are structured to ease out the teaching process.\n",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                }
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image2.jdomni.in/library/F2/90/E5/685006672E759B06DC1C855957_1496248176970_cropped_450X450.jpeg",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Online Computer Training Institutes",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "Avail best institutes whose expertise lies in rendering proficient training completely on online mode.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                }
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image3.jdomni.in/library/B5/F1/92/3FB68317B2E13CA8D7F81671B5_1496334292191_cropped_450X450.jpeg",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Technical Institutes",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "We are one of the best technical institutes offering uniquely designed courses & are devoted to excellence!",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                }
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image1.jdomni.in/library/52/56/5D/ECC0BDA74F37E2F9D85C9F3EA6_1496335418217_cropped_450X450.jpeg",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Technical Training For Electrician Trade",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "In our institute we render technical training by the professionals to learn the skills of electrician trade.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                }
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image2.jdomni.in/library/CA/C9/0B/06D6B25EC6D62E5DD8473F6EC7_1496936449094_cropped_450X450.jpeg",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Vocational Course Training Centres",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "We have expert faculties at our training centres for all the vocational courses so that you can opt for it.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                }
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image3.jdomni.in/banner/13102022/CB/16/C1/27D33CC0F3529B05F1103E44B3_1665645521497.jpg",
+                  "cropperId": 5626796,
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Consultation",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "attr": {},
+                  "text": "Enquire Now",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "Owing to our huge industrial knowledge and rich information, we are offering our customers with the best consultancy services. These services are available in varied provisions as per the detailed needs of our customers.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "$$hashKey": "0GT"
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image3.jdomni.in/banner/13102022/A3/55/06/D7C0ADE95CBFA5E5EA5AEA3D75_1665645551046.jpg",
+                  "cropperId": 5626798,
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Installation",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "attr": {},
+                  "text": "Enquire Now",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "To meet the growing requirement of our precious consumers, our firm offers Installation Services. This installation service is reliable and available for patrons in the simplest way. We apply minimal chargers for this service.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "$$hashKey": "0GU"
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image2.jdomni.in/banner/13102022/B8/99/C2/8336BF5BE824E4F1BEE27B92FC_1665645558412.png",
+                  "cropperId": 5626800,
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "Delivery",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "attr": {},
+                  "text": "Enquire Now",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "We hold expertise in providing doorstep delivery of the services to our customers. By leveraging the breadth and reliability of our global network, we make sure to deliver the desired service on stipulated time.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "$$hashKey": "0GV"
+              },
+              {
+                "image": {
+                  "imgSrc": "https://image3.jdomni.in/banner/13102022/C8/C0/07/72CFBAFA1062B9CDB2E4568834_1665645572048.jpg",
+                  "cropperId": 5626801,
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title": {
+                  "text": "AMC",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "button": {
+                  "attr": {},
+                  "text": "Enquire Now",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "subTitle": {
+                  "text": "We are proficient to render all types of AMC Service. This service is rendered under the guidance of skillful employees. To meet the meticulous requirements and demands of our respected customers, we also customise this service as per their necessities.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "$$hashKey": "0GW"
+              }
+            ],
+            "style": {
+              "image": {
+                "class": "align-center not-editable ",
+                "style": {
+                  "color": "rgb(51, 51, 51)",
+                  "width": "100%",
+                  "height": "auto",
+                  "maxWidth": "250px",
+                  "maxHeight": "250px",
+                  "borderColor": "rgba(58, 58, 58, 0.39)",
+                  "borderStyle": "none",
+                  "borderWidth": "0px",
+                  "borderRadius": "15px 15px 15px 15px",
+                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                },
+                "holderClass": " "
+              },
+              "title": {
+                "class": " not-editable para-1 align-center font-size-20 semi-bold",
+                "style": {
+                  "color": "rgba(53, 53, 53, 1)",
+                  "minHeight": "auto",
+                  "fontFamily": "Hind Madurai",
+                  "lineHeight": "1.3"
+                }
+              },
+              "button": {
+                "class": " link-button block-btn btn-sm btn-rounded",
+                "style": {}
+              },
+              "subTitle": {
+                "class": "not-editable para-2 align-center regular font-size-18",
+                "style": {
+                  "color": "rgba(51, 51, 51, 1)",
+                  "minHeight": "auto",
+                  "fontFamily": "Hind Madurai",
+                  "lineHeight": 1.4,
+                  "borderColor": "rgb(58, 58, 58)",
+                  "borderStyle": "none",
+                  "borderWidth": "0px",
+                  "borderRadius": "0px",
+                  "letterSpacing": 0,
+                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                }
+              }
+            },
+            "commonData": {
+              "blockType": "justdial-services-block",
+              "scrollEffect": "reveal",
+              "showInquiryButton": true
+            },
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "text": "\n<div><span style=\"background-color: rgba(0, 0, 0, 0); letter-spacing: 0px;\">Services</span><br></div><div>\n</div>",
+                            "type": "text",
+                            "attrs": {},
+                            "class": "main-header -header main align-center font-size-40 regular",
+                            "style": {
+                              "color": "rgba(93, 93, 93, 1)",
+                              "minHeight": "auto",
+                              "fontFamily": "Domine",
+                              "lineHeight": 1.5,
+                              "borderColor": "rgb(126, 208, 65)",
+                              "borderStyle": "none",
+                              "borderWidth": "0px",
+                              "borderRadius": "0px",
+                              "letterSpacing": 0,
+                              "backgroundColor": "rgba(0, 0, 0, 0)"
+                            },
+                            "eleKey": "header",
+                            "seoObj": {},
+                            "holderClass": " align-center",
+                            "hoverStyleId": null
+                          }
+                        ],
+                        "class": "header-subheader jd-font-roboto"
+                      },
+                      {
+                        "type": "dynamicServiceBlock",
+                        "class": "col-md-12 col-xs-12 align-center"
+                      }
+                    ],
+                    "class": "row"
+                  }
+                ],
+                "class": "container-fluid"
+              }
+            ],
+            "type": "blockBackground",
+            "class": "bootstrap-iso clearfix",
+            "style": {
+              "paddingTop": "70px",
+              "borderColor": "",
+              "borderStyle": "",
+              "borderWidth": "",
+              "paddingBottom": "70px",
+              "backgroundColor": "rgba(255, 255, 255, 0.87)"
+            },
+            "seoObj": {},
+            "webImg": "",
+            "mobileImg": "",
+            "holderClass": "services",
+            "mobCropperId": "",
+            "webCropperId": ""
+          }
+        },
+        "contentBlockId": 952583232
+      },
+      "952583233": {
+        "id": 952583233,
+        "pageType": "",
+        "blockRefId": 407589323,
+        "referenceId": 438929223,
+        "type": "layout",
+        "template": "template42",
+        "cssFilePath": "static-layouts/template42",
+        "blockData": {
+          "data": {
+            "commonData": {},
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "rows": [
+                              {
+                                "type": "image",
+                                "attrs": {},
+                                "class": "",
+                                "style": {
+                                  "borderRadius": "15px 15px 15px 15px"
+                                },
+                                "imgSrc": "https://image3.jdomni.in/banner/13102022/AB/A8/6E/DAA9B5091DD677D028552C3A7D_1665645596367.jpg",
+                                "imgClass": "",
+                                "cropperId": 5626803,
+                                "holderClass": " align-center"
+                              }
+                            ],
+                            "class": " col-md-6 padding-0",
+                            "style": {}
+                          },
+                          {
+                            "rows": [
+                              {
+                                "text": "About Us&nbsp;",
+                                "type": "text",
+                                "attrs": {},
+                                "class": "main-header align-center font-size-40 regular",
+                                "style": {
+                                  "color": "rgba(93, 93, 93, 1)",
+                                  "minHeight": "auto",
+                                  "fontFamily": "Domine",
+                                  "lineHeight": 1.5,
+                                  "borderColor": "rgb(126, 208, 65)",
+                                  "borderStyle": "none",
+                                  "borderWidth": "0px",
+                                  "borderRadius": "0px",
+                                  "letterSpacing": 0,
+                                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                                },
+                                "seoObj": {},
+                                "tagName": "",
+                                "holderClass": " align-center",
+                                "hoverStyleId": ""
+                              },
+                              {
+                                "text": "\n<div>We, Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education, situated at Jalgaon, Maharashtra are one of the leading firm in the country, set up to cater to the growing requirements of in all sectors. We have strengthened the business of the customers through proactive product development, timely delivery and superior product attributes by reinforcing innovation, cost leadership and premium quality.</div><div>\n</div>",
+                                "type": "text",
+                                "attrs": {},
+                                "class": "para-2 align-center jd-cms-tag jd-cms-tag-company-description regular font-size-20",
+                                "style": {
+                                  "color": "rgba(51, 51, 51, 1)",
+                                  "minHeight": "auto",
+                                  "fontFamily": "Hind Madurai",
+                                  "lineHeight": 1.5,
+                                  "borderColor": "rgb(58, 58, 58)",
+                                  "borderStyle": "none",
+                                  "borderWidth": "0px",
+                                  "borderRadius": "0px",
+                                  "letterSpacing": 0,
+                                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                                },
+                                "seoObj": {},
+                                "tagName": "jdCmsTagCompanyDescription",
+                                "holderClass": "",
+                                "animationObj": {
+                                  "data-a-key": "float-in",
+                                  "data-a-delay": 0,
+                                  "data-a-duration": 1.2,
+                                  "data-a-direction": "b",
+                                  "data-a-everytime": false
+                                },
+                                "hoverStyleId": ""
+                              },
+                              {
+                                "rows": [],
+                                "type": "buttonGroup",
+                                "class": " paddingLR0 alignment-container"
+                              }
+                            ],
+                            "class": " col-md-6",
+                            "style": {}
+                          }
+                        ],
+                        "class": " responsive-row",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-12 padding-0",
+                    "style": {}
+                  }
+                ],
+                "class": " container-fluid",
+                "style": {}
+              }
+            ],
+            "type": "blockBackground",
+            "attrs": {},
+            "class": " clearfix bootstrap-iso template-42",
+            "style": {
+              "paddingTop": "70px",
+              "paddingBottom": "70px",
+              "backgroundColor": "rgba(255, 255, 255, 0)"
+            },
+            "seoObj": {},
+            "webImg": "",
+            "mobileImg": "",
+            "holderClass": "",
+            "animationObj": {},
+            "mobCropperId": "",
+            "webCropperId": ""
+          }
+        },
+        "contentBlockId": 952583233,
+        "originialType": "content",
+        "isWufooForm": false
+      },
+      "952583234": {
+        "id": 952583234,
+        "pageType": "",
+        "blockRefId": 407589324,
+        "referenceId": 683503766,
+        "type": "layout",
+        "template": "template57",
+        "cssFilePath": "static-layouts/template57",
+        "blockData": {
+          "data": {
+            "commonData": {},
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "text": "Why Us",
+                        "type": "text",
+                        "attrs": {},
+                        "class": "main-header align-center font-size-40 regular",
+                        "style": {
+                          "color": "rgba(93, 93, 93, 1)",
+                          "minHeight": "auto",
+                          "fontFamily": "Domine",
+                          "lineHeight": 1.5,
+                          "borderColor": "rgb(126, 208, 65)",
+                          "borderStyle": "none",
+                          "borderWidth": "0px",
+                          "borderRadius": "0px",
+                          "letterSpacing": 0,
+                          "backgroundColor": "rgba(0, 0, 0, 0)"
+                        },
+                        "seoObj": {},
+                        "tagName": "",
+                        "holderClass": " align-center",
+                        "hoverStyleId": ""
+                      }
+                    ],
+                    "class": " col-md-12 paddingLR0 header-subheader",
+                    "style": {}
+                  },
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "rows": [
+                              {
+                                "rows": [
+                                  {
+                                    "type": "image",
+                                    "attrs": {},
+                                    "class": " ",
+                                    "style": {
+                                      "color": "rgb(51, 51, 51)",
+                                      "borderColor": "rgb(51, 51, 51)",
+                                      "borderStyle": "none",
+                                      "borderWidth": "0px",
+                                      "borderRadius": "15px 15px 15px 15px",
+                                      "backgroundColor": "rgba(0, 0, 0, 0)"
+                                    },
+                                    "imgSrc": "https://image3.jdomni.in/banner/13102022/5D/6B/E6/5FA56971DEEA0FCC6868235603_1665656645533.png",
+                                    "imgClass": "",
+                                    "cropperId": 5627431,
+                                    "holderClass": " "
+                                  }
+                                ],
+                                "class": " col-xs-4",
+                                "style": {}
+                              },
+                              {
+                                "rows": [
+                                  {
+                                    "text": "Exceptional Staff",
+                                    "type": "text",
+                                    "attrs": {},
+                                    "class": " sub-header font-size-24",
+                                    "style": {
+                                      "color": "rgb(83, 83, 83)",
+                                      "minHeight": "auto"
+                                    },
+                                    "seoObj": {},
+                                    "tagName": "",
+                                    "holderClass": "",
+                                    "animationObj": {},
+                                    "hoverStyleId": ""
+                                  }
+                                ],
+                                "class": " col-xs-8",
+                                "style": {}
+                              }
+                            ],
+                            "type": "background",
+                            "attrs": {},
+                            "class": "change-color clearfix ",
+                            "style": {
+                              "color": "rgb(51, 51, 51)",
+                              "borderColor": "rgba(0, 0, 0, 0)",
+                              "borderStyle": "none",
+                              "borderWidth": "0px",
+                              "borderRadius": "15px 15px 15px 15px",
+                              "backgroundColor": "rgba(249, 249, 249, 1)"
+                            },
+                            "holderClass": "clearfix border-radius add-image ",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            }
+                          }
+                        ],
+                        "class": " col-md-6 col-xs-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "rows": [
+                              {
+                                "rows": [
+                                  {
+                                    "type": "image",
+                                    "attrs": {},
+                                    "class": " ",
+                                    "style": {
+                                      "color": "rgb(51, 51, 51)",
+                                      "borderColor": "rgb(51, 51, 51)",
+                                      "borderStyle": "none",
+                                      "borderWidth": "0px",
+                                      "borderRadius": "15px 15px 15px 15px",
+                                      "backgroundColor": "rgba(0, 0, 0, 0)"
+                                    },
+                                    "imgSrc": "https://image3.jdomni.in/banner/13102022/9F/D1/D8/57EBCD410E7D0A2EEBD4DBC4CA_1665656651985.png",
+                                    "imgClass": "",
+                                    "cropperId": 5627433,
+                                    "holderClass": " "
+                                  }
+                                ],
+                                "class": " col-xs-4",
+                                "style": {}
+                              },
+                              {
+                                "rows": [
+                                  {
+                                    "text": "Premium Quality",
+                                    "type": "text",
+                                    "attrs": {},
+                                    "class": " sub-header font-size-24",
+                                    "style": {
+                                      "color": "rgb(83, 83, 83)",
+                                      "minHeight": "auto"
+                                    },
+                                    "seoObj": {},
+                                    "tagName": "",
+                                    "holderClass": "",
+                                    "animationObj": {},
+                                    "hoverStyleId": ""
+                                  }
+                                ],
+                                "class": " col-xs-8",
+                                "style": {}
+                              }
+                            ],
+                            "type": "background",
+                            "attrs": {},
+                            "class": "change-color clearfix ",
+                            "style": {
+                              "color": "rgb(51, 51, 51)",
+                              "borderColor": "rgba(0, 0, 0, 0)",
+                              "borderStyle": "none",
+                              "borderWidth": "0px",
+                              "borderRadius": "15px 15px 15px 15px",
+                              "backgroundColor": "rgba(249, 249, 249, 1)"
+                            },
+                            "holderClass": "clearfix border-radius add-image ",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            }
+                          }
+                        ],
+                        "class": " col-md-6 col-xs-12",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-12 col-xs-12",
+                    "style": {}
+                  },
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "rows": [
+                              {
+                                "rows": [
+                                  {
+                                    "type": "image",
+                                    "attrs": {},
+                                    "class": "",
+                                    "style": {
+                                      "borderRadius": "15px 15px 15px 15px"
+                                    },
+                                    "imgSrc": "https://image2.jdomni.in/banner/13102022/52/20/26/39BA109783367F99BE9F164B8E_1665656666216.png",
+                                    "imgClass": "",
+                                    "cropperId": 5627436,
+                                    "holderClass": ""
+                                  }
+                                ],
+                                "class": " col-xs-4",
+                                "style": {}
+                              },
+                              {
+                                "rows": [
+                                  {
+                                    "text": "Affordable Pricing",
+                                    "type": "text",
+                                    "attrs": {},
+                                    "class": " sub-header font-size-24",
+                                    "style": {
+                                      "color": "rgb(83, 83, 83)",
+                                      "minHeight": "auto"
+                                    },
+                                    "seoObj": {},
+                                    "tagName": "",
+                                    "holderClass": "",
+                                    "animationObj": {},
+                                    "hoverStyleId": ""
+                                  }
+                                ],
+                                "class": " col-xs-8",
+                                "style": {}
+                              }
+                            ],
+                            "type": "background",
+                            "attrs": {},
+                            "class": "change-color clearfix ",
+                            "style": {
+                              "color": "rgb(51, 51, 51)",
+                              "borderColor": "rgba(0, 0, 0, 0)",
+                              "borderStyle": "none",
+                              "borderWidth": "0px",
+                              "borderRadius": "15px 15px 15px 15px",
+                              "backgroundColor": "rgba(249, 249, 249, 1)"
+                            },
+                            "holderClass": "clearfix border-radius add-image ",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            }
+                          }
+                        ],
+                        "class": " col-md-6 col-xs-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "rows": [
+                              {
+                                "rows": [
+                                  {
+                                    "type": "image",
+                                    "attrs": {},
+                                    "class": " ",
+                                    "style": {
+                                      "color": "rgb(51, 51, 51)",
+                                      "borderColor": "rgb(51, 51, 51)",
+                                      "borderStyle": "none",
+                                      "borderWidth": "0px",
+                                      "borderRadius": "15px 15px 15px 15px",
+                                      "backgroundColor": "rgba(0, 0, 0, 0)"
+                                    },
+                                    "imgSrc": "https://image3.jdomni.in/banner/13102022/4D/F9/A4/0C74232368B47A5570EFB1D34B_1665656673296.png",
+                                    "imgClass": "",
+                                    "cropperId": 5627437,
+                                    "holderClass": " "
+                                  }
+                                ],
+                                "class": " col-xs-4",
+                                "style": {}
+                              },
+                              {
+                                "rows": [
+                                  {
+                                    "text": "High Industry Standards",
+                                    "type": "text",
+                                    "attrs": {},
+                                    "class": " sub-header font-size-24",
+                                    "style": {
+                                      "color": "rgb(83, 83, 83)",
+                                      "minHeight": "auto"
+                                    },
+                                    "seoObj": {},
+                                    "tagName": "",
+                                    "holderClass": "",
+                                    "animationObj": {},
+                                    "hoverStyleId": ""
+                                  }
+                                ],
+                                "class": " col-xs-8",
+                                "style": {}
+                              }
+                            ],
+                            "type": "background",
+                            "attrs": {},
+                            "class": "change-color clearfix ",
+                            "style": {
+                              "color": "rgb(51, 51, 51)",
+                              "borderColor": "rgba(0, 0, 0, 0)",
+                              "borderStyle": "none",
+                              "borderWidth": "0px",
+                              "borderRadius": "15px 15px 15px 15px",
+                              "backgroundColor": "rgba(249, 249, 249, 1)"
+                            },
+                            "holderClass": "clearfix border-radius add-image ",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            }
+                          }
+                        ],
+                        "class": " col-md-6 col-xs-12",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-12 col-xs-12",
+                    "style": {}
+                  }
+                ],
+                "class": " container-fluid",
+                "style": {}
+              }
+            ],
+            "type": "blockBackground",
+            "attrs": {},
+            "class": " bootstrap-iso clearfix template-57 global-block-padding",
+            "style": {
+              "paddingTop": "70px",
+              "paddingBottom": "70px",
+              "backgroundColor": "rgba(255, 255, 255, 1)"
+            },
+            "seoObj": {},
+            "webImg": "",
+            "mobileImg": "",
+            "holderClass": "",
+            "animationObj": {}
+          }
+        },
+        "contentBlockId": 952583234,
+        "originialType": "content",
+        "isWufooForm": false
+      },
+      "952583235": {
+        "id": 952583235,
+        "pageType": "",
+        "blockRefId": 407589325,
+        "referenceId": 438929221,
+        "type": "gallery",
+        "template": "gallery1",
+        "cssFilePath": "gallery/gallery",
+        "blockData": {
+          "data": {
+            "data": [
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/00/72/ED/02DBA332BC7D51C5B5D0E39035_1706308243079.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/00/72/ED/02DBA332BC7D51C5B5D0E39035_1706308243079.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/5E/68/76/F25898DD6BECE793B19FF77B86_1706308229188.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/5E/68/76/F25898DD6BECE793B19FF77B86_1706308229188.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/6B/27/EF/329ECA29CF346893350C098537_1706308207639.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/6B/27/EF/329ECA29CF346893350C098537_1706308207639.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/70/95/63/65E74ED09E62209F3937639785_1706308271156.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/70/95/63/65E74ED09E62209F3937639785_1706308271156.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/87/BB/B5/39D2D3C80D8AFA0D543277A583_1706308238046.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/87/BB/B5/39D2D3C80D8AFA0D543277A583_1706308238046.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/29/8C/3C/043270F51C7630D34C91EBF1CF_1706308280437.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/29/8C/3C/043270F51C7630D34C91EBF1CF_1706308280437.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/48/50/05/CC3CA8CF4740C217ECB75D192B_1706308260225.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/48/50/05/CC3CA8CF4740C217ECB75D192B_1706308260225.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/26/E0/EA/C590AC40BF74DCB91AC317A6FD_1706308219101.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/26/E0/EA/C590AC40BF74DCB91AC317A6FD_1706308219101.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/3E/CB/D7/7CD0D91EFA72E76CDAA058A8E9_1706308261952.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/3E/CB/D7/7CD0D91EFA72E76CDAA058A8E9_1706308261952.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/AC/2C/3E/A30C1049121AA44678936F6B26_1706308253748.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/AC/2C/3E/A30C1049121AA44678936F6B26_1706308253748.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/69/44/A5/DB23EFE46867466F78888151FC_1706308283762.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/69/44/A5/DB23EFE46867466F78888151FC_1706308283762.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/FC/EF/49/9A86B1E894ED85EF1633880A42_1706308276721.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/FC/EF/49/9A86B1E894ED85EF1633880A42_1706308276721.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/F7/FE/DD/6ED489F0E9043F7A5DECCAAF7A_1706308234404.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/F7/FE/DD/6ED489F0E9043F7A5DECCAAF7A_1706308234404.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/83/99/8D/05D8AE1D2D89BDC852D227B4EC_1706308247506.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/83/99/8D/05D8AE1D2D89BDC852D227B4EC_1706308247506.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/ED/D7/99/D92824BC4779C48A635F27446D_1706308287752.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/ED/D7/99/D92824BC4779C48A635F27446D_1706308287752.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/2F/B7/3D/4FA79BB009248C22A754B6FC52_1706308226955.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/2F/B7/3D/4FA79BB009248C22A754B6FC52_1706308226955.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/6C/E5/CF/5C20C6561EB57AD2ADF42627D5_1706308291488.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/6C/E5/CF/5C20C6561EB57AD2ADF42627D5_1706308291488.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://content.jdmagicbox.com/v2/comp/jalgaon/dc/9999px257.x257.100521174144.m3k2dc/catalogue/abhinav-technical-institute-of-industrial-training-institute-and-skill-development-education-navi-peth-jalgaon-jalgaon-colleges-8fdv0bc9ga.jpg",
+                "seoObj": {},
+                "previewUrl": "https://content.jdmagicbox.com/v2/comp/jalgaon/dc/9999px257.x257.100521174144.m3k2dc/catalogue/abhinav-technical-institute-of-industrial-training-institute-and-skill-development-education-navi-peth-jalgaon-jalgaon-colleges-8fdv0bc9ga.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/41/D1/BE/D57B25F1B9322F00873EDB977B_1706308265229.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/41/D1/BE/D57B25F1B9322F00873EDB977B_1706308265229.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/9B/78/D8/1D0133609147AA827E1A25EC60_1706308214126.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/9B/78/D8/1D0133609147AA827E1A25EC60_1706308214126.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/E7/AF/73/DE0F5AD2CFF26D0A5EBACA5AB2_1706308255435.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/E7/AF/73/DE0F5AD2CFF26D0A5EBACA5AB2_1706308255435.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/1A/03/86/888006CD592C6866633C09C197_1706308249459.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/1A/03/86/888006CD592C6866633C09C197_1706308249459.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/2B/28/4B/EF4CDF95880005015D598E6D3A_1706308221762.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/2B/28/4B/EF4CDF95880005015D598E6D3A_1706308221762.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/AE/BB/BB/C1F202D5D450D81C99A395CEE9_1706308258016.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/AE/BB/BB/C1F202D5D450D81C99A395CEE9_1706308258016.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image1.jdomni.in/library/27012024/78/91/21/761099F64C2B0D89738C3EE9CE_1706308210389.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image2.jdomni.in/library/27012024/78/91/21/761099F64C2B0D89738C3EE9CE_1706308210389.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image3.jdomni.in/library/27012024/B1/48/08/0C36435885601153654DAFFEC2_1706308267235.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image1.jdomni.in/library/27012024/B1/48/08/0C36435885601153654DAFFEC2_1706308267235.jpg"
+              },
+              {
+                "text": "",
+                "imgSrc": "https://image2.jdomni.in/library/27012024/A7/A1/02/4E86BC9EA470D269F97730A536_1706308273080.jpg",
+                "seoObj": {},
+                "previewUrl": "https://image3.jdomni.in/library/27012024/A7/A1/02/4E86BC9EA470D269F97730A536_1706308273080.jpg"
+              }
+            ],
+            "style": {
+              "image": {
+                "style": {
+                  "height": "inherit",
+                  "borderStyle": "none",
+                  "borderWidth": "",
+                  "borderRadius": "15px 15px 15px 15px"
+                }
+              }
+            },
+            "commonData": {
+              "blockType": "justdial-gallery-block"
+            }
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "text": "Gallery",
+                            "type": "text",
+                            "class": "main-header editable-content align-center font-size-40 regular",
+                            "style": {
+                              "color": "rgba(66, 66, 66, 1)",
+                              "fontFamily": "Domine",
+                              "lineHeight": 1.5,
+                              "borderColor": "rgb(126, 208, 65)",
+                              "borderStyle": "none",
+                              "borderWidth": "0px",
+                              "borderRadius": "0px",
+                              "letterSpacing": 0,
+                              "backgroundColor": "rgba(0, 0, 0, 0)"
+                            },
+                            "eleKey": "header",
+                            "holderClass": " align-center"
+                          }
+                        ],
+                        "class": "header-subheader jd-font-roboto"
+                      },
+                      {
+                        "type": "galleryBlock",
+                        "class": "col-md-12 col-xs-12 align-center"
+                      }
+                    ],
+                    "class": "row"
+                  }
+                ],
+                "class": "container-fluid"
+              }
+            ],
+            "type": "blockBackground",
+            "attrs": {},
+            "class": "bootstrap-iso clearfix global-block-padding",
+            "style": {
+              "paddingTop": "68px",
+              "paddingBottom": "90px",
+              "backgroundColor": "rgba(255, 255, 255, 1)"
+            },
+            "holderClass": "editGalleryTemplate"
+          }
+        },
+        "contentBlockId": 952583235
+      },
+      "952583236": {
+        "id": 952583236,
+        "pageType": "",
+        "blockRefId": 407589326,
+        "referenceId": 438929213,
+        "type": "testimonial",
+        "template": "bottomQuoteTestimonial",
+        "cssFilePath": "testimonial/bottomQuoteTestimonial",
+        "blockData": {
+          "data": {
+            "data": [
+              {
+                "title1": {
+                  "text": "Neha Kapoor",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "title2": {
+                  "text": ""
+                },
+                "comment": {
+                  "text": "I totally recommend them. They are the best.",
+                  "animationObj": {
+                    "data-a-key": "float-in",
+                    "data-a-delay": 0,
+                    "data-a-duration": 1.2,
+                    "data-a-direction": "b",
+                    "data-a-everytime": false
+                  }
+                },
+                "$hashKey": "03C",
+                "$$hashKey": "01A"
+              },
+              {
+                "title1": {
+                  "text": "Pankaj Jha"
+                },
+                "title2": {
+                  "text": ""
+                },
+                "comment": {
+                  "text": "They offer everything excellent quality. Really appreciated."
+                },
+                "$hashKey": "02V",
+                "$$hashKey": "01E"
+              },
+              {
+                "title1": {
+                  "text": "Shirish Mehra"
+                },
+                "title2": {
+                  "text": ""
+                },
+                "comment": {
+                  "text": "Very trustworthy and genuine. Been dealing with them for quite a while now."
+                },
+                "$hashKey": "02W",
+                "$$hashKey": "01I"
+              }
+            ],
+            "style": {
+              "title1": {
+                "class": "not-editable para-2 name align-center font-size-20 semi-bold",
+                "style": {
+                  "color": "rgba(51, 51, 51, 1)",
+                  "fontFamily": "Hind Madurai",
+                  "lineHeight": 1.6,
+                  "borderColor": "rgb(58, 58, 58)",
+                  "borderStyle": "none",
+                  "borderWidth": "0px",
+                  "borderRadius": "0px",
+                  "letterSpacing": 0,
+                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                }
+              },
+              "title2": {
+                "class": " not-editable para-3 font-size-16 title-2",
+                "style": {
+                  "color": "#fff"
+                }
+              },
+              "comment": {
+                "class": "not-editable align-center regular font-size-18",
+                "style": {
+                  "color": "rgba(51, 51, 51, 1)",
+                  "fontFamily": "Hind Madurai",
+                  "lineHeight": 1.6,
+                  "borderColor": "rgb(58, 58, 58)",
+                  "borderStyle": "none",
+                  "borderWidth": "0px",
+                  "borderRadius": "0px",
+                  "letterSpacing": 0,
+                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                }
+              }
+            },
+            "commonData": {
+              "scrollEffect": "reveal"
+            },
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "rows": [
+                              {
+                                "rows": [
+                                  {
+                                    "text": "Testimonials",
+                                    "type": "text",
+                                    "class": "main-header -header align-center font-size-40 regular",
+                                    "style": {
+                                      "color": "rgba(66, 66, 66, 1)",
+                                      "minHeight": "auto",
+                                      "fontFamily": "Domine",
+                                      "lineHeight": 1.5,
+                                      "borderColor": "rgb(126, 208, 65)",
+                                      "borderStyle": "none",
+                                      "borderWidth": "0px",
+                                      "borderRadius": "0px",
+                                      "letterSpacing": 0,
+                                      "backgroundColor": "rgba(0, 0, 0, 0)"
+                                    },
+                                    "eleKey": "header",
+                                    "seoObj": {},
+                                    "linkObj": {
+                                      "href": ""
+                                    },
+                                    "holderClass": " align-center",
+                                    "hoverStyleId": null
+                                  }
+                                ],
+                                "class": "header-subheader jd-font-roboto"
+                              },
+                              {
+                                "rows": [
+                                  {
+                                    "type": "image",
+                                    "class": " quote-image",
+                                    "eleKey": "quoteImage",
+                                    "imgSrc": "https://image3.jdomni.in/banner/12102022/D3/E4/D4/EBA8AAE9E01047D98573F5FEB7_1665572725423.png",
+                                    "cropperId": 5625383,
+                                    "holderClass": ""
+                                  }
+                                ],
+                                "class": "align-center col-md-12 marginB20"
+                              }
+                            ],
+                            "class": "col-md-12 col-xs-12 header-class padding0"
+                          },
+                          {
+                            "rows": [
+                              {
+                                "type": "singleTestimonial"
+                              }
+                            ],
+                            "class": "col-md-12 col-xs-12 align-center"
+                          }
+                        ],
+                        "class": "row"
+                      }
+                    ],
+                    "class": "container-fluid"
+                  }
+                ],
+                "type": "blockBackground",
+                "class": "template-29 jd-testimonial bootstrap-iso clearfix",
+                "style": {
+                  "color": "rgb(255, 255, 255)",
+                  "paddingTop": "89px",
+                  "paddingBottom": "89px",
+                  "backgroundColor": "rgba(255, 255, 255, 0.91)",
+                  "backgroundImage": "url(\"https://image3.jdomni.in/banner/09082019/3F/4E/60/BF5201DF114D6507CA2736EDE4_1565348021574.jpg\")"
+                },
+                "seoObj": {},
+                "webImg": "https://image3.jdomni.in/banner/13102022/A2/C1/88/FC841B35FEC4D84893E405BB27_1665655928298.jpg",
+                "mobileImg": "https://image1.jdomni.in/banner/13102022/E9/16/FC/F084D6B663EB2E4B3E94256B4C_1665655932581.jpeg",
+                "holderClass": "testimonial",
+                "mobCropperId": 5627381,
+                "webCropperId": 5627379
+              }
+            ],
+            "class": "bottomQuoteTestimonial",
+            "style": {
+              "boxSizing": "borderBox"
+            }
+          }
+        },
+        "contentBlockId": 952583236
+      },
+      "952583237": {
+        "id": 952583237,
+        "pageType": "",
+        "blockRefId": 407589327,
+        "referenceId": 683269110,
+        "type": "layout",
+        "template": "template107",
+        "cssFilePath": "static-layouts/template107",
+        "blockData": {
+          "data": {
+            "style": {
+              "body": {
+                "class": " align-center line-height-1-7 jd-cms-tag font-size-16",
+                "style": {
+                  "color": "rgba(51, 51, 51, 1)",
+                  "lineHeight": 1.5
+                }
+              },
+              "image": {
+                "class": "",
+                "style": {}
+              },
+              "title": {
+                "class": " align-center sub-header font-size-20 semi-bold",
+                "style": {
+                  "color": "rgba(51, 51, 51, 1)"
+                }
+              }
+            },
+            "commonData": {},
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "text": "\n                    Contact Us\n                ",
+                    "type": "text",
+                    "attrs": {},
+                    "class": "main-header align-center font-size-40 regular",
+                    "style": {
+                      "color": "rgba(66, 66, 66, 1)",
+                      "fontFamily": "Domine",
+                      "lineHeight": 1.5,
+                      "borderColor": "rgb(126, 208, 65)",
+                      "borderStyle": "none",
+                      "borderWidth": "0px",
+                      "borderRadius": "0px",
+                      "letterSpacing": 0,
+                      "backgroundColor": "rgba(0, 0, 0, 0)"
+                    },
+                    "seoObj": {},
+                    "tagName": "",
+                    "holderClass": " align-center",
+                    "hoverStyleId": ""
+                  }
+                ],
+                "class": " main-header",
+                "style": {}
+              },
+              {
+                "rows": [],
+                "class": " main-header",
+                "style": {}
+              },
+              {
+                "rows": [
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "type": "image",
+                            "attrs": {},
+                            "imgSrc": "https://image3.jdomni.in/banner/12102022/43/E6/79/86E6A4B73F1D3F1259117D3ABF_1665569446095.png",
+                            "imgClass": "",
+                            "styleKey": "data.style.image",
+                            "cropperId": 5625053,
+                            "holderClass": ""
+                          }
+                        ],
+                        "class": " col-xs-12 col-md-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "\n                            Our Office Address\n                        ",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "",
+                            "styleKey": "data.style.title",
+                            "holderClass": " para-1",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            },
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "<div>Mansingh Market,Near Railway Station/ Near Ramnivas Hotel,Z P Road, Navi Peth Jalgaon, Jalgaon, Maharashtra 425001</div>",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "jdCmsTagCompanyAddress",
+                            "styleKey": "data.style.body",
+                            "holderClass": " para-2",
+                            "animationObj": {},
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-3 col-xs-12",
+                    "style": {}
+                  },
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "type": "image",
+                            "attrs": {},
+                            "imgSrc": "https://image3.jdomni.in/banner/12102022/BE/4D/50/8F8155278F5D4F1A74800B7044_1665569471404.png",
+                            "imgClass": "",
+                            "styleKey": "data.style.image",
+                            "cropperId": 5625055,
+                            "holderClass": ""
+                          }
+                        ],
+                        "class": " col-xs-12 col-md-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "\n                            General Enquiries\n                        ",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "",
+                            "styleKey": "data.style.title",
+                            "holderClass": " para-1",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            },
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "<div>abhinav.prp@gmail.com</div>",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "jdCmsTagEmail",
+                            "styleKey": "data.style.body",
+                            "holderClass": " para-2",
+                            "animationObj": {},
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-3 col-xs-12",
+                    "style": {}
+                  },
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "type": "image",
+                            "attrs": {},
+                            "imgSrc": "https://image2.jdomni.in/banner/12102022/57/45/D5/DA5EF51BCE0599EEA019E031EC_1665569592784.png",
+                            "imgClass": "",
+                            "styleKey": "data.style.image",
+                            "cropperId": 5625061,
+                            "holderClass": ""
+                          }
+                        ],
+                        "class": " col-xs-12 col-md-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "\n                            Call Us\n                        ",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "",
+                            "styleKey": "data.style.title",
+                            "holderClass": " para-1",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            },
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "<div><a class='phoneNo-link' href='tel:+919423488174'>+91-9423488174</a></div><div><span><a class='alternateNo-link' href='tel:02572220036'>0257-2220036</a></span></div>",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "jdCmsTagContactNo",
+                            "styleKey": "data.style.body",
+                            "holderClass": " para-2",
+                            "animationObj": {},
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-3 col-xs-12",
+                    "style": {}
+                  },
+                  {
+                    "rows": [
+                      {
+                        "rows": [
+                          {
+                            "type": "image",
+                            "attrs": {},
+                            "imgSrc": "https://image3.jdomni.in/banner/12102022/37/4C/61/633D6AC883F197300995421346_1665569488093.png",
+                            "imgClass": "",
+                            "styleKey": "data.style.image",
+                            "cropperId": 5625057,
+                            "holderClass": ""
+                          }
+                        ],
+                        "class": " col-xs-12 col-md-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "\n                            Our Timings\n                        ",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "",
+                            "styleKey": "data.style.title",
+                            "holderClass": " para-1",
+                            "animationObj": {
+                              "data-a-key": "float-in",
+                              "data-a-delay": 0,
+                              "data-a-duration": 1.2,
+                              "data-a-direction": "b",
+                              "data-a-everytime": false
+                            },
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      },
+                      {
+                        "rows": [
+                          {
+                            "text": "<div><span class=\"contact-day-holder\">Mon - Sat :&nbsp;</span><span class=\"contact-timing-holder\">09:00 AM - 06:00 PM / 12:00 AM - 12:00 AM</span></div><div><span class=\"contact-day-holder\">Sun :&nbsp;</span><span class=\"contact-timing-holder\">Closed / 12:00 AM - 12:00 AM</span></div>",
+                            "type": "text",
+                            "attrs": {},
+                            "seoObj": {},
+                            "tagName": "jdCmsTagWorkingHours",
+                            "styleKey": "data.style.body",
+                            "holderClass": " para-2",
+                            "animationObj": {},
+                            "hoverStyleId": ""
+                          }
+                        ],
+                        "class": " col-xs-12",
+                        "style": {}
+                      }
+                    ],
+                    "class": " col-md-3 col-xs-12",
+                    "style": {}
+                  }
+                ],
+                "class": " row",
+                "style": {}
+              }
+            ],
+            "type": "blockBackground",
+            "attrs": {},
+            "class": " template-107 bootstrap-iso global-block-padding",
+            "style": {
+              "paddingTop": "85px",
+              "paddingBottom": "18px",
+              "backgroundColor": "rgba(255, 255, 255, 1)"
+            },
+            "seoObj": {},
+            "webImg": "",
+            "mobileImg": "",
+            "holderClass": "",
+            "animationObj": {}
+          }
+        },
+        "contentBlockId": 952583237,
+        "originialType": "contactUs",
+        "isWufooForm": false
+      },
+      "952583238": {
+        "id": 952583238,
+        "pageType": "",
+        "blockRefId": 407589328,
+        "referenceId": 683269184,
+        "type": "layout",
+        "template": "template103",
+        "cssFilePath": "static-layouts/template103",
+        "blockData": {
+          "data": {
+            "data": {
+              "input": {
+                "animationObj": {}
+              },
+              "button": {
+                "text": "Submit",
+                "animationObj": {}
+              }
+            },
+            "style": {
+              "input": {
+                "class": " border-curved",
+                "style": {
+                  "color": "rgb(195, 198, 204)",
+                  "height": "initial",
+                  "borderColor": "#C9CCD1",
+                  "backgroundColor": "rgba(255, 255, 255, 1)"
+                }
+              },
+              "button": {
+                "class": " btn-md block-btn btn-rounded",
+                "style": {
+                  "minHeight": "auto"
+                },
+                "holderClass": "align-center"
+              }
+            },
+            "commonData": {},
+            "hoverStyle": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "rows": [
+                  {
+                    "rows": [],
+                    "class": " col-md-12 paddingLR0 col-xs-12",
+                    "style": {}
+                  },
+                  {
+                    "type": "enquiryFormT103"
+                  }
+                ],
+                "class": " container-fluid paddingLR0",
+                "style": {}
+              }
+            ],
+            "type": "blockBackground",
+            "attrs": {},
+            "class": " template-103 bootstrap-iso global-block-padding",
+            "style": {
+              "paddingTop": "6px",
+              "paddingBottom": "70px",
+              "backgroundColor": "rgba(255, 255, 255, 1)"
+            },
+            "seoObj": {},
+            "webImg": "",
+            "mobileImg": "",
+            "holderClass": "",
+            "animationObj": {}
+          }
+        },
+        "contentBlockId": 952583238,
+        "originialType": "contactUs",
+        "isWufooForm": false
+      },
+      "952583239": {
+        "id": 952583239,
+        "pageType": "",
+        "blockRefId": 407589329,
+        "referenceId": 438929215,
+        "type": "map",
+        "template": "template22",
+        "cssFilePath": "static-layouts/template22",
+        "blockData": {
+          "data": {
+            "mapData": {},
+            "commonData": {}
+          },
+          "elements": {
+            "rows": [
+              {
+                "type": "map"
+              }
+            ],
+            "class": "pos-rel"
+          }
+        },
+        "contentBlockId": 952583239
+      },
+      "header": {
+        "blockData": {
+          "elements": null,
+          "data": {
+            "data": {
+              "storeLogo": {
+                "seoObj": {
+                  "alt": "",
+                  "title": ""
+                }
+              },
+              "background": {
+                "type": "blockBackground",
+                "mobileImg": "https://image1.jdomni.in/banner/13102022/AE/70/F1/BCC0659917CD8D68246DA39AA4_1665657499031.png",
+                "webImg": "https://image1.jdomni.in/banner/13102022/FE/7A/26/2C10B2A698A77E7DC4984EE520_1665658510468.png",
+                "webCropperId": 5627508,
+                "mobCropperId": 5627476,
+                "seoObj": {
+                  "alt": "",
+                  "title": ""
+                }
+              },
+              "contactNo": {
+                "text": "9423488174"
+              },
+              "email": {
+                "text": "abhinav.prp@gmail.com"
+              },
+              "searchPlaceholderText": "Search",
+              "showBtnOnSearch": false
+            },
+            "staticHTML": {
+              "class": "container-fluid positionCenterLeft",
+              "isPositionHolder": true,
+              "eleKey": "positionHolder",
+              "style": {},
+              "rows": [
+                {
+                  "rows": [
+                    {
+                      "rows": [
+                        {
+                          "text": "Services And Products",
+                          "type": "text",
+                          "attrs": {},
+                          "class": "main-header font-size-40 bold align-center",
+                          "style": {
+                            "color": "rgba(66, 66, 66, 1)",
+                            "fontFamily": "Domine",
+                            "lineHeight": 1.5,
+                            "borderColor": "rgb(126, 208, 65)",
+                            "borderStyle": "none",
+                            "borderWidth": "0px",
+                            "borderRadius": "0px",
+                            "letterSpacing": 0,
+                            "backgroundColor": "rgba(0, 0, 0, 0)"
+                          },
+                          "eleKey": "header",
+                          "holderClass": "editable-text align-center"
+                        },
+                        {
+                          "text": "&nbsp;You Will Love",
+                          "type": "text",
+                          "attrs": {},
+                          "class": "para-1 font-size-40 regular align-center",
+                          "style": {
+                            "color": "rgba(22, 22, 22, 1)",
+                            "fontFamily": "Domine",
+                            "lineHeight": 1.5,
+                            "borderColor": "rgb(126, 208, 65)",
+                            "borderStyle": "none",
+                            "borderWidth": "0px",
+                            "borderRadius": "0px",
+                            "letterSpacing": 0,
+                            "backgroundColor": "rgba(0, 0, 0, 0)"
+                          },
+                          "eleKey": "subHeader",
+                          "holderClass": "editable-text align-center"
+                        },
+                        {
+                          "rows": [
+                            {
+                              "text": "Enquire Now ",
+                              "type": "button",
+                              "attrs": {},
+                              "class": "btn button btn-rounded btn-md",
+                              "style": {
+                                "borderColor": "rgba(253, 206, 177, 1)"
+                              },
+                              "eleKey": "button1",
+                              "linkObj": {
+                                "id": 63574337,
+                                "linkId": {
+                                  "id": 63574337,
+                                  "title": "Default Enquiry Form"
+                                },
+                                "linkType": "enquiryForm",
+                                "linkedFormId": 63574337
+                              },
+                              "holderClass": "align-center",
+                              "hoverStyleId": 99886
+                            },
+                            {
+                              "rows": [],
+                              "class": "header-buttons-container",
+                              "style": {}
+                            }
+                          ],
+                          "type": "buttonGroup",
+                          "class": "alignment-container paddingLR0 three-btns align-center",
+                          "eleKey": "buttonGroup1"
+                        }
+                      ],
+                      "class": "",
+                      "style": {}
+                    }
+                  ],
+                  "class": "row",
+                  "style": {}
+                }
+              ]
+            },
+            "commonData": {
+              "scrollEffect": "none-effect"
+            },
+            "web": {
+              "visibilityFlags": {
+                "contactLinks": true,
+                "email": true,
+                "contactNo": true,
+                "changeOutlet": true,
+                "defaultLinks": true,
+                "trackOrder": true,
+                "loginSignUp": true,
+                "searchBar": true,
+                "cartButton": false,
+                "categoryNav": true,
+                "storeLogo": true,
+                "socialLinks": true,
+                "wishlistIcon": false
+              }
+            },
+            "mobile": {
+              "visibilityFlags": {
+                "searchBar": true,
+                "cartIcon": false,
+                "phoneIcon": false,
+                "burgerMenu": true,
+                "shareIcon": false,
+                "fastSearch": true,
+                "voiceSearch": true,
+                "barcodeSearch": true
+              }
+            },
+            "style": {
+              "web": {
+                "menuLinks": {
+                  "class": " font-size-18 align-center",
+                  "style": {
+                    "fontFamily": "Hind Madurai"
+                  }
+                },
+                "cartButton": {
+                  "class": "",
+                  "style": {}
+                },
+                "categoryNav": {
+                  "class": "",
+                  "style": {}
+                },
+                "loginSignUp": {
+                  "class": "",
+                  "style": {}
+                },
+                "defaultLinks": {
+                  "class": "",
+                  "style": {}
+                },
+                "searchButton": {
+                  "class": "",
+                  "style": {}
+                },
+                "storeLogo": {
+                  "class": " font-size-20",
+                  "style": {
+                    "fontFamily": "Roboto"
+                  },
+                  "alt": "",
+                  "title": ""
+                }
+              },
+              "searchBar": {
+                "class": "",
+                "style": {}
+              },
+              "background": {
+                "type": "blockBackground",
+                "style": {
+                  "backgroundColor": "rgba(243,243,243,0)"
+                },
+                "templateClass": ""
+              },
+              "mobile": {
+                "storeLogo": {
+                  "class": "",
+                  "style": {}
+                }
+              }
+            },
+            "hoverStyle": {
+              "48998": {
+                "color": "rgba(49, 49, 49, 1)",
+                "borderColor": "rgba(255, 224, 205, 1)",
+                "backgroundColor": "rgba(255, 224, 205, 1)"
+              },
+              "99886": {
+                "borderColor": "rgba(235, 184, 152, 1)",
+                "backgroundColor": "rgba(235, 184, 152, 1)"
+              }
+            }
+          }
+        }
+      },
+      "restaurant": {
+        "blockData": {
+          "elements": null,
+          "data": {
+            "commonData": {},
+            "data": {},
+            "style": {
+              "background": {
+                "style": {},
+                "class": ""
+              },
+              "menu": {
+                "style": {},
+                "class": ""
+              },
+              "subMenu": {
+                "style": {},
+                "class": ""
+              },
+              "itemTag": {
+                "style": {},
+                "class": ""
+              },
+              "itemTitle": {
+                "style": {},
+                "class": ""
+              },
+              "itemSubTitle": {
+                "style": {},
+                "class": ""
+              },
+              "itemPrice": {
+                "style": {},
+                "class": ""
+              },
+              "itemDesc": {
+                "style": {},
+                "class": ""
+              },
+              "itemImage": {
+                "style": {},
+                "class": ""
+              },
+              "itemButton": {
+                "style": {},
+                "class": ""
+              },
+              "search": {
+                "style": {},
+                "class": ""
+              },
+              "sideMenu": {
+                "style": {},
+                "class": ""
+              },
+              "cartHeader": {
+                "style": {},
+                "class": ""
+              },
+              "vegToggle": {
+                "style": {},
+                "class": ""
+              },
+              "eggToggle": {
+                "style": {},
+                "class": ""
+              },
+              "allVegTag": {
+                "style": {},
+                "class": ""
+              }
+            }
+          }
+        }
+      },
+      "footer": {
+        "blockData": {
+          "data": {
+            "data": {
+              "copyright": {
+                "text": "\u00a9 Copyrights 2026 - 2027.Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education.All Rights Reserved."
+              },
+              "address": {
+                "text": "Mansingh Market,Near Railway Station/ Near Ramnivas Hotel,Z P Road, Navi Peth Jalgaon, Jalgaon, 425001, Maharashtra"
+              },
+              "phone": {
+                "text": "+91-9423488174"
+              },
+              "email": {
+                "text": "abhinav.prp@gmail.com"
+              }
+            },
+            "style": {
+              "email": {
+                "class": " ",
+                "style": {
+                  "color": "rgb(51, 51, 51)",
+                  "fontFamily": "Hind Madurai",
+                  "lineHeight": "1.4",
+                  "borderColor": "rgb(51, 51, 51)",
+                  "borderStyle": "none",
+                  "borderWidth": "0px",
+                  "borderRadius": "0px",
+                  "letterSpacing": 0,
+                  "backgroundColor": "rgba(0, 0, 0, 0)"
+                }
+              },
+              "phone": {
+                "class": "",
+                "style": {
+                  "fontFamily": "Hind Madurai"
+                }
+              },
+              "address": {
+                "class": "",
+                "style": {}
+              },
+              "copyright": {
+                "class": "",
+                "style": {}
+              }
+            },
+            "commonData": {},
+            "hoverStyle": {}
+          },
+          "elements": null
+        }
+      }
+    },
+    "blockUnderEdit": null,
+    "blockKey": null,
+    "blockDeleteKey": null,
+    "blockStyleKey": null,
+    "showPasteBlock": false,
+    "copiedStyle": {},
+    "undoInfo": {},
+    "prevImageInfo": {},
+    "toCallAnimation": false,
+    "webLogoUrl": null,
+    "mobileLogoUrl": null,
+    "elementDefaultStyle": {},
+    "headerColors": {},
+    "updatedColors": {},
+    "isUnauthorizedUser": false
+  },
+  "homepage": {
+    "microsite": {
+      "tabs": [
+        {
+          "value": "All Products",
+          "key": "allProduct"
+        },
+        {
+          "value": "Previously Ordered",
+          "key": "prevOrderProduct",
+          "hide": true
+        },
+        {
+          "value": "Upload Prescription",
+          "key": "prescriptionUpload",
+          "hide": true
+        }
+      ],
+      "activeTab": "allProduct"
+    },
+    "isFooterVisible": true
+  },
+  "showLoader": false,
+  "searchPageData": {
+    "searchHistoryList": [],
+    "crunchEnabled": ""
+  },
+  "library": {
+    "toastMessage": {},
+    "deviceData": {
+      "isBot": false,
+      "isMobile": false,
+      "isIphone": false,
+      "isIpad": false,
+      "isIpadApp": false,
+      "isIphoneApp": false,
+      "isAndroidApp": false,
+      "isMacOS": false,
+      "isUCBrowser": false,
+      "isOpera": false,
+      "isFirefox": false,
+      "isChrome": false
+    },
+    "userSettings": {},
+    "brandCategoryReducer": {
+      "showUpdateButton": [
+        false,
+        false
+      ],
+      "selectAll": {
+        "printAllCat": true,
+        "printByBrand": true,
+        "printAllBrands": true,
+        "printByCat": true
+      }
+    },
+    "loaderReducer": false,
+    "supplierReducer": {
+      "businessDetails": {
+        "companyName": "",
+        "nickName": "",
+        "website": ""
+      },
+      "contactDetails": [
+        {
+          "name": "",
+          "mobileNumber": [
+            ""
+          ],
+          "landlineNumber": [
+            ""
+          ],
+          "email": [
+            ""
+          ]
+        }
+      ],
+      "billingAddress": [
+        {
+          "pincode": "",
+          "addressline1": "",
+          "addressline2": "",
+          "area": "",
+          "city": "",
+          "state": "",
+          "country": "",
+          "latitude": "",
+          "longitude": ""
+        }
+      ],
+      "taxDetails": {
+        "panNumber": "",
+        "gstinNumber": ""
+      },
+      "removeModal": null,
+      "miscData": {
+        "note": "",
+        "vendorLogo": ""
+      },
+      "loading": false,
+      "errors": {}
+    }
+  },
+  "wishlistInfo": {
+    "products": []
+  },
+  "storeSettings": {
+    "smartFillEnabled": true,
+    "socialWallEnabled": 1,
+    "websitePublishStatus": 1,
+    "websiteLanguage": "/en/en",
+    "homePageType": "DEFAULT",
+    "webListingPageSettings": {
+      "viewType": "grid",
+      "showAddToCartBtn": "false",
+      "showNetWeight": "false",
+      "showVariantDetails": "true",
+      "showVariantDetailsOn": "hover"
+    },
+    "webDetailPageSettings": {
+      "buttonType": "both",
+      "imageZoomStyling": "outside",
+      "descriptionPosition": "below",
+      "showVariantInName": false
+    },
+    "jdRatingFlag": 1,
+    "reviewRatings": 0,
+    "isWishlistEnabled": 1,
+    "mobileListingPageSettings": {
+      "viewType": "grid",
+      "showAddToCartBtn": "false",
+      "showNetWeight": "false",
+      "showVariantDetails": "false",
+      "subCatViewType": "grid"
+    },
+    "floatingCartStatus": 0,
+    "pwaStatus": 1,
+    "cartFooterStatus": 0,
+    "webstoreLanguages": [
+      {
+        "code": "/en/en",
+        "enName": "English",
+        "name": "",
+        "label": "English"
+      },
+      {
+        "code": "/en/hi",
+        "enName": "Hindi",
+        "name": "\u0939\u093f\u0902\u0926\u0940",
+        "label": "\u0939\u093f\u0902\u0926\u0940"
+      },
+      {
+        "code": "/en/mr",
+        "enName": "Marathi",
+        "name": "\u092e\u0930\u093e\u0920\u0940",
+        "label": "\u092e\u0930\u093e\u0920\u0940"
+      },
+      {
+        "code": "/en/bn",
+        "enName": "Bangla",
+        "name": "\u09ac\u09be\u0982\u09b2\u09be",
+        "label": "\u09ac\u09be\u0982\u09b2\u09be"
+      },
+      {
+        "code": "/en/ta",
+        "enName": "Tamil",
+        "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd",
+        "label": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
+      },
+      {
+        "code": "/en/gu",
+        "enName": "Gujarati",
+        "name": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0",
+        "label": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0"
+      },
+      {
+        "code": "/en/kn",
+        "enName": "Kannada",
+        "name": "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1",
+        "label": "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1"
+      },
+      {
+        "code": "/en/ml",
+        "enName": "Malayalam",
+        "name": "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02",
+        "label": "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02"
+      },
+      {
+        "code": "/en/te",
+        "enName": "Telugu",
+        "name": "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41",
+        "label": "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41"
+      },
+      {
+        "code": "/en/pa",
+        "enName": "Punjabi",
+        "name": "\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40",
+        "label": "\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40"
+      }
+    ],
+    "showCategoriesOnHomepage": null
+  },
+  "sliders": {
+    "pagesData": {
+      "data": {
+        "list": []
+      }
+    },
+    "addSection": {
+      "open": false,
+      "data": {}
+    },
+    "domainSlider": {
+      "open": false,
+      "data": {}
+    },
+    "animationSlider": {
+      "open": false,
+      "data": {}
+    },
+    "sortBanner": {
+      "open": false,
+      "data": {}
+    },
+    "settingsBanner": {
+      "open": false,
+      "data": {}
+    },
+    "linkToSlider": {
+      "open": false,
+      "data": {}
+    },
+    "seoSlider": {
+      "open": false,
+      "data": {
+        "seoData": {}
+      }
+    },
+    "uploadFromUrlSlider": {
+      "open": false,
+      "data": {}
+    },
+    "myImagesSlider": {
+      "open": false,
+      "data": {}
+    },
+    "detailSetting": {
+      "open": false,
+      "data": {}
+    },
+    "listingSetting": {
+      "open": false,
+      "data": {}
+    },
+    "enquiryListing": {
+      "open": false,
+      "data": {}
+    },
+    "amenitySlider": {
+      "open": false,
+      "data": {}
+    }
+  },
+  "categoryData": {
+    "rawCatData": []
+  },
+  "themeData": {
+    "selectedHeader": "coverImageMiddleHeader",
+    "isHeaderWithoutCart": true,
+    "outletArea": "Navi Peth Jalgaon",
+    "socialLinks": [
+      {
+        "id": 254952147,
+        "type": "jdLink",
+        "linkUrl": "http://www.justdial.com/dt-99E14BMU",
+        "showOnHeader": 1,
+        "linkTypeId": 33,
+        "showOnFooter": 1,
+        "socialType": "socialLink"
+      }
+    ],
+    "socialLinkJson": "{}",
+    "menuLinkJson": "{}",
+    "contactLinks": [
+      {
+        "id": 254952148,
+        "type": "contactNo",
+        "linkUrl": "9423488174",
+        "showOnHeader": 1,
+        "linkTypeId": 29,
+        "showOnFooter": 1,
+        "socialType": "contact"
+      },
+      {
+        "id": 254952149,
+        "type": "email",
+        "linkUrl": "abhinav.prp@gmail.com",
+        "showOnHeader": 1,
+        "linkTypeId": 31,
+        "showOnFooter": 1,
+        "socialType": "contact"
+      }
+    ],
+    "companyName": "Abhinav Technical Institute Of Industrial Training Institute and Skill Development Education",
+    "phoneIcon": "telephone-solid",
+    "fontFamily": "Hind Madurai",
+    "themeBackGroundColor": "#FFFFFF",
+    "themeStyleData": {
+      "fontWeight": "400",
+      "themeFonts": [
+        "Hind Madurai",
+        "Roboto",
+        "Domine"
+      ],
+      "blockPadding": {
+        "paddingTop": "45px",
+        "paddingBottom": "45px"
+      },
+      "restaurantData": {
+        "elements": null,
+        "data": {
+          "commonData": {},
+          "data": {},
+          "style": {
+            "background": {
+              "style": {},
+              "class": ""
+            },
+            "menu": {
+              "style": {},
+              "class": ""
+            },
+            "subMenu": {
+              "style": {},
+              "class": ""
+            },
+            "itemTag": {
+              "style": {},
+              "class": ""
+            },
+            "itemTitle": {
+              "style": {},
+              "class": ""
+            },
+            "itemSubTitle": {
+              "style": {},
+              "class": ""
+            },
+            "itemPrice": {
+              "style": {},
+              "class": ""
+            },
+            "itemDesc": {
+              "style": {},
+              "class": ""
+            },
+            "itemImage": {
+              "style": {},
+              "class": ""
+            },
+            "itemButton": {
+              "style": {},
+              "class": ""
+            },
+            "search": {
+              "style": {},
+              "class": ""
+            },
+            "sideMenu": {
+              "style": {},
+              "class": ""
+            },
+            "cartHeader": {
+              "style": {},
+              "class": ""
+            },
+            "vegToggle": {
+              "style": {},
+              "class": ""
+            },
+            "eggToggle": {
+              "style": {},
+              "class": ""
+            },
+            "allVegTag": {
+              "style": {},
+              "class": ""
+            }
+          }
+        }
+      }
+    },
+    "backgroundImageData": "{\"backgroundImage\":\"\",\"transparencyValue\":\"0.88\"}",
+    "headerCssPath": "coverImageMiddleHeader",
+    "floatingBlockStatus": 0,
+    "logoData": {},
+    "footerClass": "footer3",
+    "menuLinks": [],
+    "staticPages": [],
+    "stickyFooterData": null,
+    "widgetData": {},
+    "dynamicWidgets": {},
+    "leftmenuItems": null
+  },
+  "headerToast": {
+    "message": "",
+    "message2": "",
+    "imageSrc": "",
+    "isVisible": false
+  },
+  "pagePermissions": {
+    "homepage": {
+      "hasPagePermission": true
+    }
+  },
+  "cachedData": {},
+  "webstoreSession": {},
+  "listing": {
+    "productData": {
+      "items": [],
+      "filter": {},
+      "altFilter": {},
+      "filterData": {}
+    },
+    "productImageDimensionInfo": {},
+    "productView": "grid",
+    "productDataLoading": true,
+    "masterFilterArr": {},
+    "lineageData": {},
+    "filterCurPageNo": 1
+  },
+  "sliderModalData": {
+    "sliders": []
+  },
+  "headerFooterData": {
+    "header": {
+      "homepage": {
+        "staticSection": true,
+        "sections": true
+      }
+    },
+    "footer": {
+      "homepage": {}
+    }
+  },
+  "enquiryFormsData": {
+    "sliderHistoryState": null,
+    "currentComponent": "EnquiryForm",
+    "history": {
+      "prev": [],
+      "frw": [],
+      "prevHeading": [],
+      "frwHeading": []
+    },
+    "isError": false,
+    "heading": "Website Custom Forms",
+    "enquiryForms": [],
+    "enquiryDetails": {
+      "formName": "",
+      "formTitle": "",
+      "formSubTitle": "",
+      "oldFormName": "",
+      "customFieldCommand": [
+        {
+          "type": "CUSTOMER_NAME",
+          "fieldName": "Name",
+          "fieldLabel": "CUSTOMER NAME",
+          "isMandatory": true,
+          "isConditional": false,
+          "isDefaultField": true,
+          "status": null,
+          "fieldValues": null,
+          "customFieldRelCommand": [],
+          "customFieldRelId": null,
+          "parentId": null,
+          "level": 1,
+          "position": 1,
+          "fieldIndex": 0
+        },
+        {
+          "type": "MOBILE_NO",
+          "fieldName": "Mobile Number",
+          "subType": "Number",
+          "fieldLabel": "CUSTOMER MOBILE NO.",
+          "isMandatory": true,
+          "isConditional": false,
+          "isDefaultField": true,
+          "status": null,
+          "fieldValues": null,
+          "customFieldRelCommand": [],
+          "customFieldRelId": null,
+          "parentId": null,
+          "level": 1,
+          "position": 2,
+          "fieldIndex": 1
+        },
+        {
+          "type": "EMAIL",
+          "fieldName": "Email",
+          "fieldLabel": "CUSTOMER EMAIL",
+          "isMandatory": false,
+          "isConditional": false,
+          "status": null,
+          "fieldValues": null,
+          "customFieldRelCommand": [],
+          "customFieldRelId": null,
+          "parentId": null,
+          "level": 1,
+          "position": 3,
+          "fieldIndex": 2
+        },
+        {
+          "type": "CUSTOMER_MESSAGE",
+          "fieldName": "Message",
+          "fieldLabel": "MESSAGE",
+          "isMandatory": false,
+          "isConditional": false,
+          "isDefaultField": false,
+          "status": null,
+          "fieldValues": null,
+          "customFieldRelCommand": [],
+          "customFieldRelId": null,
+          "parentId": null,
+          "level": 1,
+          "position": 4,
+          "fieldIndex": 3
+        },
+        {
+          "type": "BUTTON",
+          "fieldName": "Submit",
+          "isMandatory": false,
+          "isConditional": false,
+          "isDefaultField": true,
+          "status": null,
+          "fieldValues": null,
+          "customFieldRelCommand": [],
+          "customFieldRelId": null,
+          "parentId": null,
+          "level": 1,
+          "position": 5,
+          "fieldIndex": 4
+        }
+      ]
+    },
+    "editSortableFields": [
+      {
+        "type": "CUSTOMER_NAME",
+        "fieldName": "Name",
+        "fieldLabel": "CUSTOMER NAME",
+        "isMandatory": true,
+        "isConditional": false,
+        "isDefaultField": true,
+        "status": null,
+        "fieldValues": null,
+        "customFieldRelCommand": [],
+        "customFieldRelId": null,
+        "parentId": null,
+        "level": 1,
+        "position": 1,
+        "fieldIndex": 0
+      },
+      {
+        "type": "MOBILE_NO",
+        "fieldName": "Mobile Number",
+        "subType": "Number",
+        "fieldLabel": "CUSTOMER MOBILE NO.",
+        "isMandatory": true,
+        "isConditional": false,
+        "isDefaultField": true,
+        "status": null,
+        "fieldValues": null,
+        "customFieldRelCommand": [],
+        "customFieldRelId": null,
+        "parentId": null,
+        "level": 1,
+        "position": 2,
+        "fieldIndex": 1
+      },
+      {
+        "type": "EMAIL",
+        "fieldName": "Email",
+        "fieldLabel": "CUSTOMER EMAIL",
+        "isMandatory": false,
+        "isConditional": false,
+        "status": null,
+        "fieldValues": null,
+        "customFieldRelCommand": [],
+        "customFieldRelId": null,
+        "parentId": null,
+        "level": 1,
+        "position": 3,
+        "fieldIndex": 2
+      },
+      {
+        "type": "CUSTOMER_MESSAGE",
+        "fieldName": "Message",
+        "fieldLabel": "MESSAGE",
+        "isMandatory": false,
+        "isConditional": false,
+        "isDefaultField": false,
+        "status": null,
+        "fieldValues": null,
+        "customFieldRelCommand": [],
+        "customFieldRelId": null,
+        "parentId": null,
+        "level": 1,
+        "position": 4,
+        "fieldIndex": 3
+      },
+      {
+        "type": "BUTTON",
+        "fieldName": "Submit",
+        "isMandatory": false,
+        "isConditional": false,
+        "isDefaultField": true,
+        "status": null,
+        "fieldValues": null,
+        "customFieldRelCommand": [],
+        "customFieldRelId": null,
+        "parentId": null,
+        "level": 1,
+        "position": 5,
+        "fieldIndex": 4
+      }
+    ],
+    "checkCondFieldAdded": false,
+    "stepNumber": 0,
+    "steps": [
+      {
+        "name": "Step 1",
+        "completed": true,
+        "progress": false,
+        "nextIndex": 1
+      },
+      {
+        "name": "Step 2",
+        "completed": false,
+        "progress": true,
+        "nextIndex": 2
+      },
+      {
+        "name": "Step 3",
+        "completed": false,
+        "progress": false,
+        "nextIndex": 3
+      },
+      {
+        "name": "Success Page",
+        "completed": false,
+        "progress": false,
+        "islastIndex": true
+      }
+    ],
+    "inputDetails": {},
+    "inputSavedStatus": false,
+    "clickContinue": false,
+    "isEdit": false,
+    "conditionalFields": [],
+    "showUpgradeModal": false,
+    "parentElement": null,
+    "deletedElement": null,
+    "isPageError": false,
+    "originalSortableFields": [],
+    "deletedIds": [],
+    "pageIds": [],
+    "createFormError": false,
+    "postFormError": false,
+    "conditionalFieldExist": false,
+    "enquiryVerticalList": [],
+    "selectedVerticalList": [],
+    "selectedVerticalListTemp": [],
+    "selectedVertical": {},
+    "tempCheckedVerticals": [],
+    "checkedVerticals": []
+  },
+  "global": {
+    "pageName": "homepage",
+    "pageId": ""
+  },
+  "enquiryFormData": {
+    "custom_form_data": {}
+  },
+  "enquiryFormTemplate": {}
+}
