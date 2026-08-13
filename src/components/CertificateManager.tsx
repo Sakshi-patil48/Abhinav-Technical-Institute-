@@ -5,6 +5,8 @@ import {
   CheckCircle2, XCircle, RefreshCw, Eye
 } from 'lucide-react';
 
+import { INITIAL_CERTIFICATES } from '../data/initialCertificates';
+
 export interface Certificate {
   id: string;           // e.g. ATI-2024-000123
   studentName: string;
@@ -15,6 +17,7 @@ export interface Certificate {
   endDate: string;
   issueDate: string;
   isValid: boolean;
+  remarks?: string;
 }
 
 const COURSES = [
@@ -63,8 +66,20 @@ const CertificateManager: React.FC = () => {
 
   // Load from localStorage
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('abhinav_certificates') || '[]');
-    setCerts(saved);
+    const saved = localStorage.getItem('abhinav_certificates');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setCerts(parsed);
+          return;
+        }
+      } catch {
+        // fallback
+      }
+    }
+    setCerts(INITIAL_CERTIFICATES);
+    localStorage.setItem('abhinav_certificates', JSON.stringify(INITIAL_CERTIFICATES));
   }, []);
 
   const save = (updated: Certificate[]) => {

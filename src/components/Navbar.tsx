@@ -39,8 +39,9 @@ const Navbar: React.FC<NavbarProps> = ({ onAdminClick }) => {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About Us', href: '#about' },
-    { name: 'Services', href: '#services' },
+    { name: 'Courses', href: '#services' },
     { name: 'Why Us', href: '#why-us' },
+    { name: 'Verify Certificate', href: '#verify' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Contact', href: '#contact' },
   ];

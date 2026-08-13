@@ -4,6 +4,7 @@ import {
   ShieldCheck, ShieldX, Award, Search,
   ArrowLeft, Loader2, Share2, Check
 } from 'lucide-react';
+import { INITIAL_CERTIFICATES } from '../data/initialCertificates';
 import type { Certificate } from './CertificateManager';
 
 interface VerifyCertificateProps {
@@ -50,9 +51,20 @@ const VerifyCertificate: React.FC<VerifyCertificateProps> = ({ initialId = '', o
       // Server unreachable — fallback to localStorage
     }
 
-    // Fallback to localStorage for offline/demo mode
+    // Fallback to localStorage and initial seeds
     setTimeout(() => {
-      const certs: Certificate[] = JSON.parse(localStorage.getItem('abhinav_certificates') || '[]');
+      let certs: Certificate[] = [];
+      try {
+        const saved = localStorage.getItem('abhinav_certificates');
+        certs = saved ? JSON.parse(saved) : INITIAL_CERTIFICATES;
+      } catch {
+        certs = INITIAL_CERTIFICATES;
+      }
+
+      if (!certs || certs.length === 0) {
+        certs = INITIAL_CERTIFICATES;
+      }
+
       const found = certs.find(c => c.id.toUpperCase() === certId);
 
       if (found) {

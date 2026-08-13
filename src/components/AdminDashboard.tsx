@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Lock, Eye, Trash2, Download, X, Copy, Check, Megaphone, ToggleLeft, ToggleRight, ListTodo } from 'lucide-react';
+import { Lock, Eye, Trash2, Download, X, Copy, Check, Megaphone, ToggleLeft, ToggleRight, ListTodo, BookOpen, Award, LogOut } from 'lucide-react';
+import SyllabusAdmin from './SyllabusAdmin';
+import CertificateManager from './CertificateManager';
 import type { Inquiry } from './Contact';
 
 interface AdminDashboardProps {
@@ -15,7 +17,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   
   // Dashboard Tabs
-  const [activeTab, setActiveTab] = useState<'leads' | 'notice' | 'courses'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'syllabus' | 'certificates' | 'courses' | 'notice'>('leads');
   
   // Notice State
   const [noticeText, setNoticeText] = useState('');
@@ -195,10 +197,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
             <div className="space-y-6 h-full flex flex-col">
               
               {/* Tab Navigation */}
-              <div className="flex border-b border-slate-200 shrink-0">
+              <div className="flex border-b border-slate-200 shrink-0 overflow-x-auto">
                 <button
                   onClick={() => setActiveTab('leads')}
-                  className={`flex items-center space-x-2 py-3 px-6 border-b-2 font-semibold text-sm transition-all ${
+                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all ${
                     activeTab === 'leads'
                       ? 'border-orangeAccent text-orangeAccent'
                       : 'border-transparent text-slate-500 hover:text-slate-900'
@@ -207,20 +209,34 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
                   <ListTodo className="h-4 w-4" />
                   <span>Leads & Inquiries ({inquiries.length})</span>
                 </button>
+
                 <button
-                  onClick={() => setActiveTab('notice')}
-                  className={`flex items-center space-x-2 py-3 px-6 border-b-2 font-semibold text-sm transition-all ${
-                    activeTab === 'notice'
+                  onClick={() => setActiveTab('syllabus')}
+                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all ${
+                    activeTab === 'syllabus'
                       ? 'border-orangeAccent text-orangeAccent'
                       : 'border-transparent text-slate-500 hover:text-slate-900'
                   }`}
                 >
-                  <Megaphone className="h-4 w-4" />
-                  <span>Notice Board Announcement</span>
+                  <BookOpen className="h-4 w-4" />
+                  <span>Syllabus Upload & Manager</span>
                 </button>
+
+                <button
+                  onClick={() => setActiveTab('certificates')}
+                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all ${
+                    activeTab === 'certificates'
+                      ? 'border-orangeAccent text-orangeAccent'
+                      : 'border-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  <Award className="h-4 w-4" />
+                  <span>Certificate Authority</span>
+                </button>
+
                 <button
                   onClick={() => setActiveTab('courses')}
-                  className={`flex items-center space-x-2 py-3 px-6 border-b-2 font-semibold text-sm transition-all ${
+                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all ${
                     activeTab === 'courses'
                       ? 'border-orangeAccent text-orangeAccent'
                       : 'border-transparent text-slate-500 hover:text-slate-900'
@@ -228,6 +244,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
                 >
                   <ToggleLeft className="h-4 w-4" />
                   <span>Course Admissions</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('notice')}
+                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all ${
+                    activeTab === 'notice'
+                      ? 'border-orangeAccent text-orangeAccent'
+                      : 'border-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  <Megaphone className="h-4 w-4" />
+                  <span>Notice Board</span>
                 </button>
               </div>
 
@@ -332,6 +360,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ isOpen, onClose }) => {
                         ))}
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* 2. Syllabus & Curriculum Manager */}
+                {activeTab === 'syllabus' && (
+                  <div className="pt-2">
+                    <SyllabusAdmin />
+                  </div>
+                )}
+
+                {/* 3. Certificate Authority Hub */}
+                {activeTab === 'certificates' && (
+                  <div className="pt-2">
+                    <CertificateManager />
                   </div>
                 )}
 

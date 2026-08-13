@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { GraduationCap, School, Laptop, Cpu, Zap, Wrench, ShieldCheck, Settings, Truck, ClipboardCheck, FileDown, CheckCircle2, XCircle } from 'lucide-react';
+import { GraduationCap, School, Laptop, Cpu, Zap, Wrench, ShieldCheck, Settings, Truck, ClipboardCheck, FileDown, CheckCircle2, XCircle, BookOpen } from 'lucide-react';
+import SyllabusModal from './SyllabusModal';
 
 interface ServiceItem {
   title: string;
@@ -11,6 +12,8 @@ interface ServiceItem {
 
 const Services: React.FC = () => {
   const [admissions, setAdmissions] = useState<Record<string, boolean>>({});
+  const [isSyllabusOpen, setIsSyllabusOpen] = useState(false);
+  const [selectedSyllabusCourse, setSelectedSyllabusCourse] = useState<string>('');
 
   // Sync admissions status
   useEffect(() => {
@@ -322,12 +325,15 @@ const Services: React.FC = () => {
                     </button>
                     
                     <button
-                      onClick={() => generateSyllabusPDF(service.title)}
-                      className="inline-flex items-center text-xs font-semibold text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-100 transition-colors"
-                      title="Download Syllabus as PDF"
+                      onClick={() => {
+                        setSelectedSyllabusCourse(service.title);
+                        setIsSyllabusOpen(true);
+                      }}
+                      className="inline-flex items-center text-xs font-semibold text-slate-600 hover:text-orange-600 bg-slate-100 hover:bg-orange-50 hover:border-orange-200 px-3 py-1.5 rounded-xl border border-slate-200 transition-all"
+                      title="View & Download Official Course Syllabus"
                     >
-                      <FileDown className="h-3.5 w-3.5 mr-1" />
-                      Syllabus
+                      <BookOpen className="h-3.5 w-3.5 mr-1.5 text-orange-500" />
+                      Syllabus PDF
                     </button>
                   </div>
                 </div>
@@ -335,6 +341,13 @@ const Services: React.FC = () => {
             );
           })}
         </div>
+
+        {/* Course Syllabus Library Modal */}
+        <SyllabusModal
+          isOpen={isSyllabusOpen}
+          onClose={() => setIsSyllabusOpen(false)}
+          selectedCourseTitle={selectedSyllabusCourse}
+        />
 
       </div>
     </section>
