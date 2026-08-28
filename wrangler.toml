@@ -1,0 +1,14 @@
+name = "abhinav-institute"
+compatibility_date = "2026-08-28"
+pages_build_output_dir = "./dist"
+
+# Cloudflare D1 Database Binding
+# To create your D1 database, run:
+#   npx wrangler d1 create abhinav_db
+# Then copy the database_id below and execute schema:
+#   npx wrangler d1 execute abhinav_db --file=./schema.sql
+
+[[d1_databases]]
+binding = "DB"
+database_name = "abhinav_db"
+database_id = "59883733-56c6-4074-b326-24368343beb3"

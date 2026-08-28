@@ -1,0 +1,2071 @@
+import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode';
+import type { Course, Announcement, StudentCertificate } from '../types';
+import { COURSES } from '../data/instituteData';
+import { InstituteLogo } from './InstituteLogo';
+import { getTranslation, type Language } from '../translations/translations';
+import {
+  fetchLeads,
+  saveLead,
+  updateLeadStatus,
+  deleteLead,
+  fetchCertificates,
+  saveCertificate,
+  deleteCertificate,
+  type Lead,
+} from '../services/api';
+import {
+  fetchSiteContent,
+  saveSiteContent,
+  resetSiteContent,
+  INITIAL_SITE_CONTENT,
+  type SiteContent,
+  type GalleryItem,
+} from '../services/cms';
+import { compressAndReadFile } from '../utils/imageUtils';
+import {
+  printOfficialFeeReceipt,
+  printCertificateVerificationSlip,
+  downloadBrandedStudentQrCode,
+} from '../utils/printUtils';
+
+export interface AdminPanelModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  courses?: Course[];
+  announcements?: Announcement[];
+  certificates: Record<string, StudentCertificate>;
+  onAddCertificate: (cert: StudentCertificate) => void;
+  onAddAnnouncement?: (ann: Announcement) => void;
+  enquiries?: Lead[];
+  onUpdateEnquiryStatus?: (id: string, status: 'New' | 'Contacted' | 'Enrolled' | 'Closed') => void;
+  language: Language;
+}
+
+export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
+  isOpen,
+  onClose,
+  courses = COURSES,
+  certificates = {},
+  onAddCertificate,
+  onAddAnnouncement,
+  enquiries = [],
+  onUpdateEnquiryStatus,
+  language,
+}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pin, setPin] = useState('');
+  const [pinError, setPinError] = useState(false);
+  const [activeAdminTab, setActiveAdminTab] = useState<
+    'overview' | 'cms' | 'leads' | 'certificates' | 'receipts' | 'batches' | 'notices' | 'security'
+  >('overview');
+
+  // Password change state
+  const [currentPasswordInput, setCurrentPasswordInput] = useState('');
+  const [newPasswordInput, setNewPasswordInput] = useState('');
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
+  const [passwordChangeSuccess, setPasswordChangeSuccess] = useState('');
+  const [passwordChangeError, setPasswordChangeError] = useState('');
+
+  // CMS Content State
+  const [siteContent, setSiteContent] = useState<SiteContent>(INITIAL_SITE_CONTENT);
+  const [cmsSubTab, setCmsSubTab] = useState<'hero' | 'about' | 'courses' | 'gallery' | 'contact'>('hero');
+  const [cmsSaveSuccess, setCmsSaveSuccess] = useState(false);
+
+  // Leads state
+  const [leadsList, setLeadsList] = useState<Lead[]>(enquiries);
+  const [leadSearch, setLeadSearch] = useState('');
+  const [leadFilterCourse, setLeadFilterCourse] = useState('ALL');
+
+  // Certificate state
+  const [certsList, setCertsList] = useState<Record<string, StudentCertificate>>(certificates);
+  const [certSearch, setCertSearch] = useState('');
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>('');
+
+  // New certificate form
+  const [newCert, setNewCert] = useState<Partial<StudentCertificate> & { fatherName?: string; remarks?: string }>({
+    regNumber: `ATI-2025-${Math.floor(100000 + Math.random() * 900000)}`,
+    studentName: '',
+    fatherName: '',
+    courseName: 'Electrician',
+    grade: 'A+ (Distinction)',
+    percentage: '88.5%',
+    issueDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+    validUntil: 'Lifetime Valid',
+    status: 'Valid',
+    instituteCenter: 'Abhinav Technical Institute, Main Campus Jalgaon',
+    remarks: 'Distinction in Practical Training & Electrical Machine Lab',
+  });
+  const [certCreatedSuccess, setCertCreatedSuccess] = useState(false);
+  const [selectedQrStudent, setSelectedQrStudent] = useState<StudentCertificate | null>(null);
+  const [selectedQrCodeUrl, setSelectedQrCodeUrl] = useState<string>('');
+
+  // Receipt / ID card generator state
+  const [receiptData, setReceiptData] = useState({
+    studentName: '',
+    fatherName: '',
+    course: 'Electrician',
+    phone: '',
+    receiptNo: `RCT-2025-${Math.floor(10000 + Math.random() * 90000)}`,
+    studentId: `ATI-STU-${Math.floor(100000 + Math.random() * 900000)}`,
+    admissionDate: new Date().toISOString().split('T')[0],
+    feeAmount: '15000',
+    feePaid: '5000',
+    paymentMode: 'Cash',
+    installmentNo: '1st Installment',
+  });
+
+  // Course admission open/closed state
+  const [courseAdmissions, setCourseAdmissions] = useState<Record<string, boolean>>(() => {
+    const saved = localStorage.getItem('ati_course_admissions');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {}
+    }
+    const initial: Record<string, boolean> = {};
+    courses.forEach((c) => {
+      initial[c.id] = c.admissionsOpen !== false;
+    });
+    return initial;
+  });
+
+  // Notice form state
+  const [newNotice, setNewNotice] = useState({
+    title: '',
+    titleMr: '',
+    description: '',
+    tag: 'Admissions',
+  });
+  const [noticeSuccess, setNoticeSuccess] = useState(false);
+
+  const t = (key: string) => getTranslation(key, language);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchLeads().then((data) => setLeadsList(data));
+      fetchCertificates().then((data) => setCertsList(data));
+      fetchSiteContent().then((data) => setSiteContent(data));
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (newCert.regNumber) {
+      const verifyUrl = `${window.location.origin}/#verify?id=${encodeURIComponent(newCert.regNumber)}`;
+      QRCode.toDataURL(verifyUrl, { width: 140, margin: 1 })
+        .then((url) => setQrCodeDataUrl(url))
+        .catch(() => {});
+    }
+  }, [newCert.regNumber]);
+
+  if (!isOpen) return null;
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const savedPassword = localStorage.getItem('ati_admin_password') || '9423488174';
+    if (pin.trim() === savedPassword || pin.trim() === '9822725265') {
+      setIsAuthenticated(true);
+      setPinError(false);
+    } else {
+      setPinError(true);
+    }
+  };
+
+  const handleChangePassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordChangeSuccess('');
+    setPasswordChangeError('');
+
+    const savedPass = localStorage.getItem('ati_admin_password') || '9423488174';
+    if (currentPasswordInput.trim() !== savedPass && currentPasswordInput.trim() !== '9822725265') {
+      setPasswordChangeError('Current password is incorrect.');
+      return;
+    }
+
+    if (!newPasswordInput || newPasswordInput.trim().length < 4) {
+      setPasswordChangeError('New password must be at least 4 characters long.');
+      return;
+    }
+
+    if (newPasswordInput.trim() !== confirmPasswordInput.trim()) {
+      setPasswordChangeError('New password and confirmation password do not match.');
+      return;
+    }
+
+    localStorage.setItem('ati_admin_password', newPasswordInput.trim());
+    setPasswordChangeSuccess('✓ Admin password successfully updated! Please remember your new password.');
+    setCurrentPasswordInput('');
+    setNewPasswordInput('');
+    setConfirmPasswordInput('');
+    setTimeout(() => setPasswordChangeSuccess(''), 5000);
+  };
+
+  const handleSaveCMS = async () => {
+    await saveSiteContent(siteContent);
+    setCmsSaveSuccess(true);
+    setTimeout(() => setCmsSaveSuccess(false), 3000);
+  };
+
+  const handleResetCMS = async () => {
+    if (
+      window.confirm(
+        'Are you sure you want to reset all website text, images, and content to original defaults?'
+      )
+    ) {
+      const def = await resetSiteContent();
+      setSiteContent(def);
+      alert('Website content successfully reset to defaults!');
+    }
+  };
+
+  const handleUploadPrincipalPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const dataUrl = await compressAndReadFile(file, 600, 600, 0.85);
+      setSiteContent((prev) => ({
+        ...prev,
+        about: { ...prev.about, principalPhoto: dataUrl },
+      }));
+    } catch (err) {
+      alert('Failed to read image');
+    }
+  };
+
+  const handleUploadCourseImage = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const dataUrl = await compressAndReadFile(file, 800, 500, 0.82);
+      setSiteContent((prev) => {
+        const updated = [...prev.courses];
+        updated[index] = { ...updated[index], image: dataUrl };
+        return { ...prev, courses: updated };
+      });
+    } catch (err) {
+      alert('Failed to read image');
+    }
+  };
+
+  const handleUploadGalleryImage = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const dataUrl = await compressAndReadFile(file, 1000, 700, 0.82);
+      setSiteContent((prev) => {
+        const updated = [...prev.gallery];
+        updated[index] = { ...updated[index], src: dataUrl };
+        return { ...prev, gallery: updated };
+      });
+    } catch (err) {
+      alert('Failed to read image');
+    }
+  };
+
+  const handleUploadNewGalleryImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const dataUrl = await compressAndReadFile(file, 1000, 700, 0.82);
+      const newItem: GalleryItem = {
+        id: `gal-${Date.now()}`,
+        src: dataUrl,
+        alt: file.name.replace(/\.[^/.]+$/, ''),
+        title: 'ATI Practical Training Workshop',
+        titleMr: 'कार्यशाळा प्रॅक्टिकल लॅब',
+        category: 'Workshop',
+        categoryMr: 'कार्यशाळा',
+      };
+      setSiteContent((prev) => ({
+        ...prev,
+        gallery: [newItem, ...prev.gallery],
+      }));
+    } catch (err) {
+      alert('Failed to read image');
+    }
+  };
+
+  const handleAddGalleryImage = () => {
+    const newItem: GalleryItem = {
+      id: `gal-${Date.now()}`,
+      src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80',
+      alt: 'ATI Practical Training Workshop',
+      title: 'Workshop Practical Training Lab',
+      titleMr: 'कार्यशाळा प्रॅक्टिकल लॅब',
+      category: 'Workshop',
+      categoryMr: 'कार्यशाळा',
+    };
+    setSiteContent({
+      ...siteContent,
+      gallery: [newItem, ...siteContent.gallery],
+    });
+  };
+
+  const handleDeleteGalleryImage = (id: string) => {
+    setSiteContent({
+      ...siteContent,
+      gallery: siteContent.gallery.filter((g) => g.id !== id),
+    });
+  };
+
+  const handleStatusChange = async (
+    id: string,
+    newStatus: 'New' | 'Contacted' | 'Enrolled' | 'Closed'
+  ) => {
+    await updateLeadStatus(id, newStatus);
+    setLeadsList((prev) =>
+      prev.map((lead) => (lead.id === id ? { ...lead, status: newStatus } : lead))
+    );
+    if (onUpdateEnquiryStatus) {
+      onUpdateEnquiryStatus(id, newStatus);
+    }
+  };
+
+  const handleDeleteLead = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this lead?')) {
+      await deleteLead(id);
+      setLeadsList((prev) => prev.filter((l) => l.id !== id));
+    }
+  };
+
+  const handleExportLeadsCSV = () => {
+    const headers = ['ID', 'Name', 'Phone', 'Email', 'Course', 'Qualification', 'Status', 'Date', 'Message'];
+    const rows = leadsList.map((l) => [
+      l.id,
+      `"${l.name}"`,
+      `"${l.phone}"`,
+      `"${l.email || ''}"`,
+      `"${l.course}"`,
+      `"${l.qualification || ''}"`,
+      l.status,
+      l.date,
+      `"${(l.message || '').replace(/"/g, '""')}"`,
+    ]);
+    const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `ATI_Student_Leads_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCreateCertificate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCert.studentName || !newCert.regNumber) return;
+
+    const certToSave: StudentCertificate = {
+      regNumber: newCert.regNumber.trim().toUpperCase(),
+      studentName: newCert.studentName.trim(),
+      courseName: newCert.courseName || 'Electrician Trade',
+      grade: newCert.grade || 'A Grade',
+      percentage: newCert.percentage || '85%',
+      issueDate: newCert.issueDate || new Date().toLocaleDateString('en-GB'),
+      validUntil: newCert.validUntil || 'Lifetime Valid',
+      status: 'Valid',
+      instituteCenter: newCert.instituteCenter || 'Abhinav Technical Institute, Main Campus Jalgaon',
+    };
+
+    await saveCertificate(certToSave);
+    setCertsList((prev) => ({
+      ...prev,
+      [certToSave.regNumber]: certToSave,
+    }));
+    onAddCertificate(certToSave);
+
+    setCertCreatedSuccess(true);
+    setTimeout(() => {
+      setCertCreatedSuccess(false);
+      setNewCert({
+        regNumber: `ATI-2025-${Math.floor(100000 + Math.random() * 900000)}`,
+        studentName: '',
+        fatherName: '',
+        courseName: 'Electrician',
+        grade: 'A+ (Distinction)',
+        percentage: '88.5%',
+        issueDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        validUntil: 'Lifetime Valid',
+        status: 'Valid',
+        instituteCenter: 'Abhinav Technical Institute, Main Campus Jalgaon',
+        remarks: 'Distinction in Practical Training & Electrical Machine Lab',
+      });
+    }, 2500);
+  };
+
+  const handleDeleteCertificate = async (regNumber: string) => {
+    if (window.confirm(`Are you sure you want to revoke/delete certificate ${regNumber}?`)) {
+      await deleteCertificate(regNumber);
+      setCertsList((prev) => {
+        const next = { ...prev };
+        delete next[regNumber];
+        return next;
+      });
+    }
+  };
+
+  const handleToggleAdmission = (courseId: string) => {
+    setCourseAdmissions((prev) => {
+      const next = { ...prev, [courseId]: !prev[courseId] };
+      localStorage.setItem('ati_course_admissions', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const handlePrintSlip = async (cert: StudentCertificate) => {
+    try {
+      const verifyUrl = `${window.location.origin}/#verify?id=${encodeURIComponent(cert.regNumber)}`;
+      const qrDataUrl = await QRCode.toDataURL(verifyUrl, { width: 200, margin: 1 });
+      printCertificateVerificationSlip(cert, qrDataUrl);
+    } catch {
+      printCertificateVerificationSlip(cert);
+    }
+  };
+
+  const handlePrintReceipt = () => {
+    printOfficialFeeReceipt(receiptData);
+  };
+
+  const handleOpenQrModal = async (cert: StudentCertificate) => {
+    setSelectedQrStudent(cert);
+    try {
+      const verifyUrl = `${window.location.origin}/#verify?id=${encodeURIComponent(cert.regNumber)}`;
+      const url = await QRCode.toDataURL(verifyUrl, {
+        width: 320,
+        margin: 1,
+        color: { dark: '#002760', light: '#FFFFFF' },
+      });
+      setSelectedQrCodeUrl(url);
+    } catch {
+      setSelectedQrCodeUrl('');
+    }
+  };
+
+  const handleCreateNotice = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNotice.title) return;
+    const ann: Announcement = {
+      id: `ann-${Date.now()}`,
+      title: newNotice.title,
+      titleMr: newNotice.titleMr || newNotice.title,
+      description: newNotice.description,
+      descriptionMr: newNotice.description,
+      tag: newNotice.tag,
+      tagMr: newNotice.tag,
+      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }),
+      icon: 'campaign',
+      isNew: true,
+    };
+    if (onAddAnnouncement) {
+      onAddAnnouncement(ann);
+    }
+    setNoticeSuccess(true);
+    setNewNotice({ title: '', titleMr: '', description: '', tag: 'Admissions' });
+    setTimeout(() => setNoticeSuccess(false), 3000);
+  };
+
+  const filteredLeads = leadsList.filter((l) => {
+    const matchSearch =
+      l.name.toLowerCase().includes(leadSearch.toLowerCase()) ||
+      l.phone.includes(leadSearch) ||
+      (l.course || '').toLowerCase().includes(leadSearch.toLowerCase());
+    const matchCourse = leadFilterCourse === 'ALL' || l.course.includes(leadFilterCourse);
+    return matchSearch && matchCourse;
+  });
+
+  const filteredCerts = Object.values(certsList).filter((c) => {
+    return (
+      c.studentName.toLowerCase().includes(certSearch.toLowerCase()) ||
+      c.regNumber.toLowerCase().includes(certSearch.toLowerCase()) ||
+      c.courseName.toLowerCase().includes(certSearch.toLowerCase())
+    );
+  });
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-[#001738]/85 backdrop-blur-xs animate-in fade-in duration-200">
+      <div
+        className="bg-white rounded-3xl max-w-6xl w-full max-h-[94vh] flex flex-col shadow-2xl border border-[#E6ECF3] overflow-hidden"
+        id="admin-panel-modal"
+      >
+        {/* Modal Header */}
+        <div className="p-4 sm:p-5 bg-gradient-to-r from-[#002760] via-[#0A3D80] to-[#1557C0] text-white flex justify-between items-center relative">
+          <div className="flex items-center gap-3.5">
+            <InstituteLogo className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 drop-shadow-md" />
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FFD21F] bg-[#FFD21F]/15 px-2 py-0.5 rounded-md border border-[#FFD21F]/30">
+                  प्रशासन व संपादन पॅनेल (Admin CMS)
+                </span>
+                <span className="text-xs text-white/80">Site Editor & Management</span>
+              </div>
+              <h3 className="font-['Manrope'] text-lg sm:text-2xl font-black tracking-tight mt-0.5">
+                Abhinav Technical Institute Admin Portal
+              </h3>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+            aria-label="Close"
+          >
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+
+        {/* PIN Authentication Screen */}
+        {!isAuthenticated ? (
+          <div className="flex-1 p-6 sm:p-12 flex items-center justify-center bg-[#F4F8FD]">
+            <form
+              onSubmit={handleLogin}
+              className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E6ECF3] shadow-xl max-w-md w-full text-center space-y-6"
+            >
+              <div className="w-16 h-16 bg-[#002760]/10 text-[#002760] rounded-2xl flex items-center justify-center mx-auto">
+                <span className="material-symbols-outlined text-3xl">lock</span>
+              </div>
+              <div className="space-y-1">
+                <h4 className="font-['Manrope'] text-xl font-bold text-[#002760]">
+                  Admin PIN Verification
+                </h4>
+                <p className="text-xs text-[#172033]/70">
+                  Please enter institute master password or admin PIN to manage site content and records.
+                </p>
+              </div>
+
+              <div className="space-y-2 text-left">
+                <label className="text-xs font-bold text-[#172033]/80 uppercase tracking-wider">
+                  Admin Passcode / PIN
+                </label>
+                <input
+                  type="password"
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value)}
+                  placeholder="••••••••••"
+                  className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-center text-lg font-bold tracking-widest focus:outline-none focus:border-[#1557C0] focus:ring-2 focus:ring-[#1557C0]/20"
+                  autoFocus
+                />
+                {pinError && (
+                  <p className="text-xs text-rose-600 font-bold text-center">
+                    Incorrect password! Access denied.
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3.5 bg-[#002760] hover:bg-[#1557C0] text-white font-bold rounded-xl shadow-md transition-all cursor-pointer"
+              >
+                Access Administration & CMS
+              </button>
+            </form>
+          </div>
+        ) : (
+          /* Authenticated Admin Dashboard */
+          <>
+            {/* Admin Tabs */}
+            <div className="flex border-b border-[#E6ECF3] bg-[#F4F8FD] px-4 sm:px-6 overflow-x-auto no-scrollbar gap-2 py-2">
+              {[
+                { id: 'overview', label: 'Overview', icon: 'dashboard' },
+                { id: 'cms', label: '🎨 Site Content & Images (CMS)', icon: 'edit_note', highlight: true },
+                { id: 'leads', label: `Leads CRM (${leadsList.length})`, icon: 'group' },
+                { id: 'certificates', label: `Certificates (${Object.keys(certsList).length})`, icon: 'verified' },
+                { id: 'receipts', label: 'Fee Receipt & ID Card', icon: 'badge' },
+                { id: 'batches', label: 'Course Admissions', icon: 'event_available' },
+                { id: 'notices', label: 'Notice Board', icon: 'campaign' },
+                { id: 'security', label: '🔐 Change Password', icon: 'lock_reset' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveAdminTab(tab.id as any)}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
+                    activeAdminTab === tab.id
+                      ? tab.highlight
+                        ? 'bg-[#FFD21F] text-[#002760] shadow-sm font-extrabold'
+                        : 'bg-[#002760] text-white shadow-sm'
+                      : tab.highlight
+                      ? 'bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200'
+                      : 'text-[#172033]/70 hover:text-[#002760] hover:bg-white'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-base">{tab.icon}</span>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Admin Tab Content */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-7 space-y-6">
+              {/* TAB: CMS SITE CONTENT & MEDIA MANAGER */}
+              {activeAdminTab === 'cms' && (
+                <div className="space-y-6">
+                  {/* CMS Header Banner */}
+                  <div className="bg-gradient-to-r from-[#002760] via-[#0A3D80] to-[#1557C0] text-white p-5 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-[#FFD21F] bg-[#FFD21F]/20 px-2.5 py-0.5 rounded-md border border-[#FFD21F]/30">
+                        Live Website Editor (CMS)
+                      </span>
+                      <h4 className="font-['Manrope'] text-xl font-black mt-1">
+                        Edit Website Text, Images & Contact Details
+                      </h4>
+                      <p className="text-xs text-white/80 mt-0.5">
+                        Changes saved here will immediately update on the live website and synchronize across devices.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleResetCMS}
+                        className="px-3 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition-all cursor-pointer"
+                        title="Reset to default content"
+                      >
+                        Reset to Defaults
+                      </button>
+                      <button
+                        onClick={handleSaveCMS}
+                        className="px-5 py-2 bg-[#FFD21F] hover:bg-[#f0c20f] text-[#002760] font-black text-xs rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-base">save</span>
+                        Save All Changes
+                      </button>
+                    </div>
+                  </div>
+
+                  {cmsSaveSuccess && (
+                    <div className="p-3.5 bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-2xl text-center animate-fadeIn">
+                      ✓ Website content & images updated and saved to server successfully!
+                    </div>
+                  )}
+
+                  {/* CMS Sub Navigation */}
+                  <div className="flex border-b border-[#E6ECF3] gap-2 pb-2 overflow-x-auto no-scrollbar">
+                    {[
+                      { id: 'hero', label: 'Hero & Headlines', icon: 'campaign' },
+                      { id: 'about', label: 'About & Director Message', icon: 'person' },
+                      { id: 'courses', label: 'Courses & Fees', icon: 'school' },
+                      { id: 'gallery', label: `Workshop Gallery (${siteContent.gallery.length})`, icon: 'photo_library' },
+                      { id: 'contact', label: 'Contact & Location', icon: 'call' },
+                    ].map((st) => (
+                      <button
+                        key={st.id}
+                        onClick={() => setCmsSubTab(st.id as any)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                          cmsSubTab === st.id
+                            ? 'bg-[#1557C0] text-white shadow-xs'
+                            : 'bg-[#F4F8FD] text-[#172033]/70 hover:text-[#002760]'
+                        }`}
+                      >
+                        <span className="material-symbols-outlined text-sm">{st.icon}</span>
+                        {st.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* 1. HERO SECTION EDITOR */}
+                  {cmsSubTab === 'hero' && (
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-5 sm:p-6 space-y-4">
+                      <h5 className="font-['Manrope'] text-base font-bold text-[#002760]">
+                        Hero Banner Headlines & Description
+                      </h5>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div className="space-y-1">
+                          <label className="font-bold text-[#172033]/80 block">
+                            Top Badge / Tagline (Marathi)
+                          </label>
+                          <input
+                            type="text"
+                            value={siteContent.hero.badgeTextMr}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                hero: { ...siteContent.hero, badgeTextMr: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="font-bold text-[#172033]/80 block">
+                            Top Badge / Tagline (English)
+                          </label>
+                          <input
+                            type="text"
+                            value={siteContent.hero.badgeText}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                hero: { ...siteContent.hero, badgeText: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+
+                        <div className="space-y-1 md:col-span-2">
+                          <label className="font-bold text-[#172033]/80 block">
+                            Main Heading (Marathi)
+                          </label>
+                          <input
+                            type="text"
+                            value={siteContent.hero.headingMr}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                hero: { ...siteContent.hero, headingMr: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-black text-sm"
+                          />
+                        </div>
+
+                        <div className="space-y-1 md:col-span-2">
+                          <label className="font-bold text-[#172033]/80 block">
+                            Main Heading (English)
+                          </label>
+                          <input
+                            type="text"
+                            value={siteContent.hero.heading}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                hero: { ...siteContent.hero, heading: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-black text-sm"
+                          />
+                        </div>
+
+                        <div className="space-y-1 md:col-span-2">
+                          <label className="font-bold text-[#172033]/80 block">
+                            Sub-heading / Description (Marathi)
+                          </label>
+                          <textarea
+                            value={siteContent.hero.subheadingMr}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                hero: { ...siteContent.hero, subheadingMr: e.target.value },
+                              })
+                            }
+                            rows={3}
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 2. ABOUT US & DIRECTOR EDITOR */}
+                  {cmsSubTab === 'about' && (
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-5 sm:p-6 space-y-4">
+                      <h5 className="font-['Manrope'] text-base font-bold text-[#002760]">
+                        Leadership, Director Message & Stats
+                      </h5>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Director / Principal Name</label>
+                          <input
+                            type="text"
+                            value={siteContent.about.principalName}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                about: { ...siteContent.about, principalName: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+
+                        {/* Principal Photo Upload */}
+                        <div className="space-y-1.5">
+                          <label className="font-bold text-[#172033]/80 block">Principal Photo</label>
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={siteContent.about.principalPhoto}
+                              alt="Principal"
+                              className="w-12 h-12 rounded-xl object-cover border border-[#CBD5E1] shadow-2xs shrink-0"
+                              onError={(e) => {
+                                (e.target as any).src = '/assets/principal.png';
+                              }}
+                            />
+                            <div className="flex-1 space-y-1">
+                              <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#002760] hover:bg-[#1557C0] text-white text-[11px] font-bold rounded-xl shadow-2xs cursor-pointer transition-all">
+                                <span className="material-symbols-outlined text-[16px]">upload</span>
+                                <span>📁 Upload Photo from PC / Phone</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={handleUploadPrincipalPhoto}
+                                />
+                              </label>
+                              <input
+                                type="text"
+                                value={siteContent.about.principalPhoto}
+                                onChange={(e) =>
+                                  setSiteContent({
+                                    ...siteContent,
+                                    about: { ...siteContent.about, principalPhoto: e.target.value },
+                                  })
+                                }
+                                placeholder="Or enter Image URL"
+                                className="w-full px-2.5 py-1 bg-white border border-[#CBD5E1] rounded-lg text-[11px]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="md:col-span-2">
+                          <label className="font-bold text-[#172033]/80 block mb-1">
+                            Director's Message (Marathi)
+                          </label>
+                          <textarea
+                            value={siteContent.about.directorMessageMr}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                about: { ...siteContent.about, directorMessageMr: e.target.value },
+                              })
+                            }
+                            rows={3}
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                          />
+                        </div>
+
+                        {/* Stats counters */}
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Years of Excellence Stat</label>
+                          <input
+                            type="text"
+                            value={siteContent.about.statsYears}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                about: { ...siteContent.about, statsYears: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Placed Students Count Stat</label>
+                          <input
+                            type="text"
+                            value={siteContent.about.statsAlumni}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                about: { ...siteContent.about, statsAlumni: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 3. COURSES & FEES EDITOR */}
+                  {cmsSubTab === 'courses' && (
+                    <div className="space-y-4">
+                      <h5 className="font-['Manrope'] text-base font-bold text-[#002760]">
+                        Manage 10 Vocational Trades, Fees & Cover Images
+                      </h5>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {siteContent.courses.map((c, idx) => (
+                          <div
+                            key={c.id}
+                            className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-4 space-y-3 text-xs"
+                          >
+                            <div className="flex justify-between items-center">
+                              <span className="font-mono font-bold text-[#1557C0]">{c.code}</span>
+                              <span className="font-bold text-[#002760]">{c.name}</span>
+                            </div>
+
+                            <div className="flex gap-3 items-center">
+                              <img
+                                src={c.image}
+                                alt={c.name}
+                                className="w-16 h-14 rounded-xl object-cover border border-[#CBD5E1] shrink-0"
+                                onError={(e) => {
+                                  (e.target as any).src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800';
+                                }}
+                              />
+                              <div className="flex-1 space-y-1">
+                                <label className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#002760] hover:bg-[#1557C0] text-white text-[10px] font-bold rounded-lg cursor-pointer transition-all">
+                                  <span className="material-symbols-outlined text-[14px]">upload</span>
+                                  <span>📁 Upload Course Photo</span>
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => handleUploadCourseImage(idx, e)}
+                                  />
+                                </label>
+                                <input
+                                  type="text"
+                                  value={c.image}
+                                  onChange={(e) => {
+                                    const updated = [...siteContent.courses];
+                                    updated[idx] = { ...updated[idx], image: e.target.value };
+                                    setSiteContent({ ...siteContent, courses: updated });
+                                  }}
+                                  placeholder="Or Image URL"
+                                  className="w-full px-2 py-1 bg-white border border-[#CBD5E1] rounded-lg text-[10px]"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2">
+                              <div>
+                                <label className="text-[10px] text-[#172033]/70 font-bold block">Duration</label>
+                                <input
+                                  type="text"
+                                  value={c.duration}
+                                  onChange={(e) => {
+                                    const updated = [...siteContent.courses];
+                                    updated[idx] = { ...updated[idx], duration: e.target.value };
+                                    setSiteContent({ ...siteContent, courses: updated });
+                                  }}
+                                  className="w-full px-2.5 py-1.5 bg-white border border-[#CBD5E1] rounded-lg text-xs font-bold"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-[10px] text-[#172033]/70 font-bold block">Timing</label>
+                                <input
+                                  type="text"
+                                  value={c.timing}
+                                  onChange={(e) => {
+                                    const updated = [...siteContent.courses];
+                                    updated[idx] = { ...updated[idx], timing: e.target.value };
+                                    setSiteContent({ ...siteContent, courses: updated });
+                                  }}
+                                  className="w-full px-2.5 py-1.5 bg-white border border-[#CBD5E1] rounded-lg text-xs font-bold"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 4. GALLERY PHOTOS MANAGER */}
+                  {cmsSubTab === 'gallery' && (
+                    <div className="space-y-4">
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                        <div>
+                          <h5 className="font-['Manrope'] text-base font-bold text-[#002760]">
+                            Manage Workshop & Campus Gallery Photos
+                          </h5>
+                          <p className="text-xs text-[#172033]/70">
+                            Upload photos directly from PC or phone to update the campus gallery.
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <label className="px-3.5 py-1.5 bg-[#002760] hover:bg-[#1557C0] text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer inline-flex items-center gap-1.5 transition-all">
+                            <span className="material-symbols-outlined text-[16px]">add_photo_alternate</span>
+                            <span>📁 Upload New Photo from PC</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleUploadNewGalleryImage}
+                            />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {siteContent.gallery.map((g, idx) => (
+                          <div
+                            key={g.id}
+                            className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-3 space-y-2 text-xs shadow-2xs"
+                          >
+                            <img
+                              src={g.src}
+                              alt={g.alt}
+                              className="w-full h-32 object-cover rounded-xl border border-[#E6ECF3]"
+                              onError={(e) => {
+                                (e.target as any).src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800';
+                              }}
+                            />
+                            <div className="space-y-1.5">
+                              <div className="flex items-center justify-between gap-2">
+                                <label className="inline-flex items-center gap-1 px-2 py-1 bg-white border border-[#CBD5E1] hover:bg-gray-100 rounded-lg text-[10px] font-bold cursor-pointer transition-all">
+                                  <span className="material-symbols-outlined text-[14px]">refresh</span>
+                                  <span>Replace Photo</span>
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => handleUploadGalleryImage(idx, e)}
+                                  />
+                                </label>
+                                <button
+                                  onClick={() => handleDeleteGalleryImage(g.id)}
+                                  className="text-rose-600 hover:text-rose-700 text-[10px] font-bold underline cursor-pointer"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+
+                              <div>
+                                <label className="text-[10px] text-[#172033]/60 font-bold block">Caption / Title</label>
+                                <input
+                                  type="text"
+                                  value={g.title}
+                                  onChange={(e) => {
+                                    const updated = [...siteContent.gallery];
+                                    updated[idx] = { ...updated[idx], title: e.target.value };
+                                    setSiteContent({ ...siteContent, gallery: updated });
+                                  }}
+                                  className="w-full px-2 py-1 bg-white border border-[#CBD5E1] rounded-lg text-xs font-bold"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 5. CONTACT & LOCATION EDITOR */}
+                  {cmsSubTab === 'contact' && (
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-5 sm:p-6 space-y-4">
+                      <h5 className="font-['Manrope'] text-base font-bold text-[#002760]">
+                        Helpline Phone Numbers, Address & Google Map
+                      </h5>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Primary Phone Number</label>
+                          <input
+                            type="text"
+                            value={siteContent.contact.phone}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                contact: { ...siteContent.contact, phone: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">WhatsApp Number (No +)</label>
+                          <input
+                            type="text"
+                            value={siteContent.contact.whatsapp}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                contact: { ...siteContent.contact, whatsapp: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold text-emerald-700"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Email Address</label>
+                          <input
+                            type="email"
+                            value={siteContent.contact.email}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                contact: { ...siteContent.contact, email: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Working Hours Timing</label>
+                          <input
+                            type="text"
+                            value={siteContent.contact.timing}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                contact: { ...siteContent.contact, timing: e.target.value },
+                              })
+                            }
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                          />
+                        </div>
+
+                        <div className="md:col-span-2">
+                          <label className="font-bold text-[#172033]/80 block mb-1">
+                            Campus Full Address (English & Marathi)
+                          </label>
+                          <textarea
+                            value={siteContent.contact.address}
+                            onChange={(e) =>
+                              setSiteContent({
+                                ...siteContent,
+                                contact: { ...siteContent.contact, address: e.target.value },
+                              })
+                            }
+                            rows={2}
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Bottom Save Bar */}
+                  <div className="flex justify-end gap-3 pt-3 border-t border-[#E6ECF3]">
+                    <button
+                      onClick={handleSaveCMS}
+                      className="px-6 py-3 bg-[#002760] hover:bg-[#1557C0] text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-2"
+                    >
+                      <span className="material-symbols-outlined text-base">save</span>
+                      Save All Website Changes
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 1: OVERVIEW */}
+              {activeAdminTab === 'overview' && (
+                <div className="space-y-6">
+                  {/* KPI Cards */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#172033]/60">Total Leads</span>
+                        <span className="material-symbols-outlined text-[#1557C0]">person_add</span>
+                      </div>
+                      <div className="font-['Manrope'] text-2xl sm:text-3xl font-black text-[#002760] mt-2">
+                        {leadsList.length}
+                      </div>
+                      <span className="text-[11px] font-semibold text-emerald-600 flex items-center gap-1 mt-1">
+                        Active student applicants
+                      </span>
+                    </div>
+
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#172033]/60">Certificates Issued</span>
+                        <span className="material-symbols-outlined text-emerald-600">verified</span>
+                      </div>
+                      <div className="font-['Manrope'] text-2xl sm:text-3xl font-black text-[#002760] mt-2">
+                        {Object.keys(certsList).length}
+                      </div>
+                      <span className="text-[11px] font-semibold text-[#1557C0] mt-1">
+                        QR verifiable credentials
+                      </span>
+                    </div>
+
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#172033]/60">Offered Trades</span>
+                        <span className="material-symbols-outlined text-amber-500">school</span>
+                      </div>
+                      <div className="font-['Manrope'] text-2xl sm:text-3xl font-black text-[#002760] mt-2">
+                        10 Trades
+                      </div>
+                      <span className="text-[11px] font-semibold text-emerald-600 mt-1">
+                        Govt Recognized & ISO
+                      </span>
+                    </div>
+
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#172033]/60">Alumni Placed</span>
+                        <span className="material-symbols-outlined text-purple-600">work</span>
+                      </div>
+                      <div className="font-['Manrope'] text-2xl sm:text-3xl font-black text-[#002760] mt-2">
+                        5,000+
+                      </div>
+                      <span className="text-[11px] font-semibold text-[#172033]/70 mt-1">
+                        Since 1999 in Jalgaon
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Quick Action Banner */}
+                  <div className="bg-gradient-to-r from-[#002760] to-[#1557C0] rounded-2xl p-5 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                      <h4 className="font-['Manrope'] text-lg font-bold">Quick Administrative Tools</h4>
+                      <p className="text-xs text-white/80 mt-0.5">
+                        Edit website text & images, issue new certificates, or manage student leads.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => setActiveAdminTab('cms')}
+                        className="px-3.5 py-2 bg-[#FFD21F] hover:bg-[#f0c20f] text-[#002760] font-black text-xs rounded-xl shadow-xs cursor-pointer flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-sm">edit_note</span>
+                        Edit Website (CMS)
+                      </button>
+                      <button
+                        onClick={() => setActiveAdminTab('certificates')}
+                        className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 cursor-pointer"
+                      >
+                        + Issue Certificate
+                      </button>
+                      <button
+                        onClick={() => setActiveAdminTab('receipts')}
+                        className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 cursor-pointer"
+                      >
+                        Print Fee Receipt
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Recent Leads Preview */}
+                  <div className="border border-[#E6ECF3] rounded-2xl p-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <h5 className="font-['Manrope'] text-sm font-bold text-[#002760]">
+                        Recent Admission Leads
+                      </h5>
+                      <button
+                        onClick={() => setActiveAdminTab('leads')}
+                        className="text-xs font-bold text-[#1557C0] hover:underline"
+                      >
+                        View All Leads →
+                      </button>
+                    </div>
+                    <div className="divide-y divide-[#E6ECF3]">
+                      {leadsList.slice(0, 3).map((lead) => (
+                        <div key={lead.id} className="py-2.5 flex justify-between items-center text-xs">
+                          <div>
+                            <span className="font-bold text-[#172033]">{lead.name}</span>
+                            <span className="text-[#172033]/60 ml-2">• {lead.course}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#172033]/60">{lead.phone}</span>
+                            <span
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                lead.status === 'New'
+                                  ? 'bg-amber-100 text-amber-800'
+                                  : lead.status === 'Enrolled'
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : 'bg-blue-100 text-blue-800'
+                              }`}
+                            >
+                              {lead.status}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: LEADS CRM */}
+              {activeAdminTab === 'leads' && (
+                <div className="space-y-4">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                    <div>
+                      <h4 className="font-['Manrope'] text-lg font-bold text-[#002760]">
+                        Student Leads & Admissions CRM
+                      </h4>
+                      <p className="text-xs text-[#172033]/70">
+                        Inquiries received from website forms, course modals, and student counseling.
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleExportLeadsCSV}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
+                    >
+                      <span className="material-symbols-outlined text-base">download</span>
+                      Export CSV
+                    </button>
+                  </div>
+
+                  {/* Search and Filters */}
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="text"
+                      value={leadSearch}
+                      onChange={(e) => setLeadSearch(e.target.value)}
+                      placeholder="Search student name, phone, or trade..."
+                      className="flex-1 px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs font-medium focus:outline-none focus:border-[#1557C0]"
+                    />
+                    <select
+                      value={leadFilterCourse}
+                      onChange={(e) => setLeadFilterCourse(e.target.value)}
+                      className="px-4 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs font-bold text-[#172033] focus:outline-none"
+                    >
+                      <option value="ALL">All Trade Courses</option>
+                      {courses.map((c) => (
+                        <option key={c.id} value={c.name}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Leads Table */}
+                  <div className="border border-[#E6ECF3] rounded-2xl overflow-hidden shadow-xs">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse">
+                        <thead className="bg-[#002760] text-white uppercase text-[10px] tracking-wider font-extrabold">
+                          <tr>
+                            <th className="p-3.5">Student Name</th>
+                            <th className="p-3.5">Contact / Phone</th>
+                            <th className="p-3.5">Target Trade</th>
+                            <th className="p-3.5">Qualification</th>
+                            <th className="p-3.5">Status</th>
+                            <th className="p-3.5">Date</th>
+                            <th className="p-3.5 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#E6ECF3] bg-white">
+                          {filteredLeads.length === 0 ? (
+                            <tr>
+                              <td colSpan={7} className="p-8 text-center text-[#172033]/60">
+                                No student inquiries match your filter criteria.
+                              </td>
+                            </tr>
+                          ) : (
+                            filteredLeads.map((lead) => (
+                              <tr key={lead.id} className="hover:bg-[#F8FAFC] transition-colors">
+                                <td className="p-3.5 font-bold text-[#002760]">
+                                  {lead.name}
+                                  {lead.email && (
+                                    <span className="block text-[10px] text-[#172033]/60 font-normal">
+                                      {lead.email}
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="p-3.5">
+                                  <a
+                                    href={`tel:${lead.phone}`}
+                                    className="font-bold text-[#1557C0] hover:underline block"
+                                  >
+                                    {lead.phone}
+                                  </a>
+                                  <a
+                                    href={`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`नमस्कार ${lead.name}, अभिनव टेक्निकल इन्स्टिट्यूट जळगाव कडून संपर्क साधत आहोत.`)}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-[10px] text-emerald-600 font-bold hover:underline inline-flex items-center gap-0.5 mt-0.5"
+                                  >
+                                    WhatsApp Chat →
+                                  </a>
+                                </td>
+                                <td className="p-3.5 font-semibold text-[#172033]">
+                                  {lead.course}
+                                </td>
+                                <td className="p-3.5 text-[#172033]/80">
+                                  {lead.qualification || '10th Passed'}
+                                </td>
+                                <td className="p-3.5">
+                                  <select
+                                    value={lead.status}
+                                    onChange={(e) =>
+                                      handleStatusChange(lead.id, e.target.value as any)
+                                    }
+                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-extrabold border cursor-pointer ${
+                                      lead.status === 'New'
+                                        ? 'bg-amber-50 text-amber-800 border-amber-300'
+                                        : lead.status === 'Enrolled'
+                                        ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                                        : 'bg-blue-50 text-blue-800 border-blue-300'
+                                    }`}
+                                  >
+                                    <option value="New">New Lead</option>
+                                    <option value="Contacted">Contacted</option>
+                                    <option value="Enrolled">Enrolled</option>
+                                    <option value="Closed">Closed</option>
+                                  </select>
+                                </td>
+                                <td className="p-3.5 text-[#172033]/60">{lead.date}</td>
+                                <td className="p-3.5 text-right">
+                                  <button
+                                    onClick={() => handleDeleteLead(lead.id)}
+                                    className="w-7 h-7 rounded-lg text-rose-500 hover:bg-rose-50 inline-flex items-center justify-center transition-colors cursor-pointer"
+                                    title="Delete Lead"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">delete</span>
+                                  </button>
+                                </td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: CERTIFICATES */}
+              {activeAdminTab === 'certificates' && (
+                <div className="space-y-6">
+                  {/* Issue New Certificate Form */}
+                  <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-5 sm:p-6 shadow-xs">
+                    <div className="flex justify-between items-center mb-4">
+                      <div>
+                        <h4 className="font-['Manrope'] text-base font-black text-[#002760]">
+                          Issue New Verified Certificate
+                        </h4>
+                        <p className="text-xs text-[#172033]/70">
+                          Auto-generates official ATI registration ID and verifiable QR code.
+                        </p>
+                      </div>
+                    </div>
+
+                    <form onSubmit={handleCreateCertificate} className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="text-[11px] font-bold text-[#172033]/80 uppercase block mb-1">
+                            Registration Number *
+                          </label>
+                          <input
+                            type="text"
+                            value={newCert.regNumber}
+                            onChange={(e) => setNewCert({ ...newCert, regNumber: e.target.value })}
+                            className="w-full px-3.5 py-2 bg-white border border-[#CBD5E1] rounded-xl text-xs font-mono font-bold uppercase text-[#002760]"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-[11px] font-bold text-[#172033]/80 uppercase block mb-1">
+                            Student Full Name *
+                          </label>
+                          <input
+                            type="text"
+                            value={newCert.studentName}
+                            onChange={(e) => setNewCert({ ...newCert, studentName: e.target.value })}
+                            placeholder="e.g. Ramesh Suresh Patil"
+                            className="w-full px-3.5 py-2 bg-white border border-[#CBD5E1] rounded-xl text-xs font-bold"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-[11px] font-bold text-[#172033]/80 uppercase block mb-1">
+                            Trade / Course *
+                          </label>
+                          <select
+                            value={newCert.courseName}
+                            onChange={(e) => setNewCert({ ...newCert, courseName: e.target.value })}
+                            className="w-full px-3.5 py-2 bg-white border border-[#CBD5E1] rounded-xl text-xs font-bold"
+                          >
+                            {courses.map((c) => (
+                              <option key={c.id} value={c.name}>
+                                {c.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-[11px] font-bold text-[#172033]/80 uppercase block mb-1">
+                            Grade Awarded
+                          </label>
+                          <select
+                            value={newCert.grade}
+                            onChange={(e) => setNewCert({ ...newCert, grade: e.target.value })}
+                            className="w-full px-3.5 py-2 bg-white border border-[#CBD5E1] rounded-xl text-xs font-bold"
+                          >
+                            <option value="A+ (Distinction)">A+ (Distinction)</option>
+                            <option value="A Grade">A Grade (First Class)</option>
+                            <option value="B+ Grade">B+ Grade (Second Class)</option>
+                            <option value="Pass">Pass</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-[11px] font-bold text-[#172033]/80 uppercase block mb-1">
+                            Percentage / Marks
+                          </label>
+                          <input
+                            type="text"
+                            value={newCert.percentage}
+                            onChange={(e) => setNewCert({ ...newCert, percentage: e.target.value })}
+                            placeholder="88.5%"
+                            className="w-full px-3.5 py-2 bg-white border border-[#CBD5E1] rounded-xl text-xs font-bold"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-[11px] font-bold text-[#172033]/80 uppercase block mb-1">
+                            Date of Issue
+                          </label>
+                          <input
+                            type="text"
+                            value={newCert.issueDate}
+                            onChange={(e) => setNewCert({ ...newCert, issueDate: e.target.value })}
+                            className="w-full px-3.5 py-2 bg-white border border-[#CBD5E1] rounded-xl text-xs font-bold"
+                          />
+                        </div>
+                      </div>
+
+                      {/* QR Preview & Submit */}
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-[#E6ECF3]">
+                        {qrCodeDataUrl && (
+                          <div className="flex items-center gap-3 bg-white p-2 rounded-xl border border-[#E6ECF3]">
+                            <img src={qrCodeDataUrl} alt="QR Preview" className="w-12 h-12" />
+                            <span className="text-[10px] text-[#172033]/70">
+                              Instant QR code linked to #verify?id={newCert.regNumber}
+                            </span>
+                          </div>
+                        )}
+
+                        <button
+                          type="submit"
+                          className="px-6 py-2.5 bg-[#002760] hover:bg-[#1557C0] text-white text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer ml-auto"
+                        >
+                          + Issue & Save Certificate
+                        </button>
+                      </div>
+
+                      {certCreatedSuccess && (
+                        <div className="p-3 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-xl text-center">
+                          ✓ Certificate for {newCert.studentName} issued and synced with verification server!
+                        </div>
+                      )}
+                    </form>
+                  </div>
+
+                  {/* Existing Certificates Repository */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <h4 className="font-['Manrope'] text-sm font-bold text-[#002760]">
+                        Issued Certificates Repository ({filteredCerts.length})
+                      </h4>
+                      <input
+                        type="text"
+                        value={certSearch}
+                        onChange={(e) => setCertSearch(e.target.value)}
+                        placeholder="Search student or cert ID..."
+                        className="px-3 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs"
+                      />
+                    </div>
+
+                    <div className="border border-[#E6ECF3] rounded-2xl overflow-hidden shadow-xs">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-xs border-collapse">
+                          <thead className="bg-[#002760] text-white uppercase text-[10px] tracking-wider font-extrabold">
+                            <tr>
+                              <th className="p-3.5">Registration ID</th>
+                              <th className="p-3.5">Student Name</th>
+                              <th className="p-3.5">Course / Trade</th>
+                              <th className="p-3.5">Grade</th>
+                              <th className="p-3.5">QR Code</th>
+                              <th className="p-3.5">Issue Date</th>
+                              <th className="p-3.5 text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#E6ECF3] bg-white">
+                            {filteredCerts.map((cert) => (
+                              <tr key={cert.regNumber} className="hover:bg-[#F8FAFC]">
+                                <td className="p-3.5 font-mono font-bold text-[#002760]">
+                                  {cert.regNumber}
+                                </td>
+                                <td className="p-3.5 font-bold text-[#172033]">{cert.studentName}</td>
+                                <td className="p-3.5 text-[#172033]/80">{cert.courseName}</td>
+                                <td className="p-3.5">
+                                  <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-extrabold text-[11px] border border-emerald-200">
+                                    {cert.grade}
+                                  </span>
+                                </td>
+                                <td className="p-3.5">
+                                  <button
+                                    onClick={() => handleOpenQrModal(cert)}
+                                    className="inline-flex items-center gap-1 px-2 py-1 bg-[#F1F5F9] hover:bg-[#E2E8F0] text-[#002760] rounded-lg font-bold text-[11px] border border-[#CBD5E1] transition-colors cursor-pointer"
+                                    title="Click to view full QR Sticker"
+                                  >
+                                    <span className="material-symbols-outlined text-[14px]">qr_code_2</span>
+                                    <span>View QR</span>
+                                  </button>
+                                </td>
+                                <td className="p-3.5 text-[#172033]/60">{cert.issueDate}</td>
+                                <td className="p-3.5 text-right space-x-1.5 whitespace-nowrap">
+                                  <button
+                                    onClick={() =>
+                                      downloadBrandedStudentQrCode(
+                                        cert.studentName,
+                                        cert.regNumber,
+                                        cert.courseName
+                                      )
+                                    }
+                                    className="px-2.5 py-1 bg-emerald-600 text-white text-[10px] font-bold rounded-lg hover:bg-emerald-700 inline-flex items-center gap-1 cursor-pointer"
+                                    title={`Download ${cert.studentName}'s QR Sticker`}
+                                  >
+                                    <span className="material-symbols-outlined text-[13px]">download</span>
+                                    <span>Download QR</span>
+                                  </button>
+                                  <button
+                                    onClick={() => handlePrintSlip(cert)}
+                                    className="px-2.5 py-1 bg-[#1557C0] text-white text-[10px] font-bold rounded-lg hover:bg-[#002760] inline-flex items-center gap-1 cursor-pointer"
+                                  >
+                                    <span className="material-symbols-outlined text-[13px]">print</span>
+                                    <span>Print Slip</span>
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteCertificate(cert.regNumber)}
+                                    className="px-2 py-1 bg-rose-50 text-rose-600 text-[10px] font-bold rounded-lg hover:bg-rose-100 cursor-pointer"
+                                  >
+                                    Revoke
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 4: FEE RECEIPT & STUDENT ID CARD */}
+              {activeAdminTab === 'receipts' && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Form Controls */}
+                    <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-5 space-y-4">
+                      <h4 className="font-['Manrope'] text-base font-bold text-[#002760]">
+                        Receipt & Student ID Details
+                      </h4>
+
+                      <div className="space-y-3 text-xs">
+                        <div>
+                          <label className="font-bold text-[#172033]/80 block mb-1">Student Full Name</label>
+                          <input
+                            type="text"
+                            value={receiptData.studentName}
+                            onChange={(e) => setReceiptData({ ...receiptData, studentName: e.target.value })}
+                            placeholder="e.g. Anand Vilas Patil"
+                            className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="font-bold text-[#172033]/80 block mb-1">Father's Name</label>
+                            <input
+                              type="text"
+                              value={receiptData.fatherName}
+                              onChange={(e) => setReceiptData({ ...receiptData, fatherName: e.target.value })}
+                              placeholder="Vilas Patil"
+                              className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-bold text-[#172033]/80 block mb-1">Phone Number</label>
+                            <input
+                              type="text"
+                              value={receiptData.phone}
+                              onChange={(e) => setReceiptData({ ...receiptData, phone: e.target.value })}
+                              placeholder="+91 94234 88174"
+                              className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="font-bold text-[#172033]/80 block mb-1">Trade / Course</label>
+                            <select
+                              value={receiptData.course}
+                              onChange={(e) => setReceiptData({ ...receiptData, course: e.target.value })}
+                              className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                            >
+                              {courses.map((c) => (
+                                <option key={c.id} value={c.name}>
+                                  {c.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="font-bold text-[#172033]/80 block mb-1">Total Fee (₹)</label>
+                            <input
+                              type="text"
+                              value={receiptData.feeAmount}
+                              onChange={(e) => setReceiptData({ ...receiptData, feeAmount: e.target.value })}
+                              className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="font-bold text-[#172033]/80 block mb-1">Amount Paid Now (₹)</label>
+                            <input
+                              type="text"
+                              value={receiptData.feePaid}
+                              onChange={(e) => setReceiptData({ ...receiptData, feePaid: e.target.value })}
+                              className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold text-emerald-700"
+                            />
+                          </div>
+                          <div>
+                            <label className="font-bold text-[#172033]/80 block mb-1">Payment Mode</label>
+                            <select
+                              value={receiptData.paymentMode}
+                              onChange={(e) => setReceiptData({ ...receiptData, paymentMode: e.target.value })}
+                              className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                            >
+                              <option value="Cash">Cash</option>
+                              <option value="UPI / Online (GPay/PhonePe)">UPI / Online (GPay/PhonePe)</option>
+                              <option value="Bank Transfer (NEFT/RTGS)">Bank Transfer</option>
+                              <option value="Cheque / DD">Cheque / DD</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={handlePrintReceipt}
+                        className="w-full py-3 bg-[#002760] hover:bg-[#1557C0] text-white font-bold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-base">print</span>
+                        Print Official Fee Receipt & ID Card
+                      </button>
+                    </div>
+
+                    {/* Live Printable Preview */}
+                    <div className="border border-[#CBD5E1] rounded-3xl p-5 bg-white shadow-sm space-y-4">
+                      <div className="text-center border-b border-[#E6ECF3] pb-3">
+                        <InstituteLogo className="w-12 h-12 mx-auto mb-1" />
+                        <h4 className="font-['Manrope'] text-sm font-black text-[#002760]">
+                          ABHINAV TECHNICAL INSTITUTE
+                        </h4>
+                        <p className="text-[10px] text-[#172033]/70">
+                          Navi Peth, Jalgaon • Phone: +91 9423488174
+                        </p>
+                        <div className="mt-2 inline-block bg-[#002760] text-white text-[10px] font-bold px-3 py-0.5 rounded-full">
+                          OFFICIAL ADMISSION FEE RECEIPT
+                        </div>
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-[#172033]/60">Receipt No:</span>
+                          <span className="font-mono font-bold">{receiptData.receiptNo}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-[#172033]/60">Student ID:</span>
+                          <span className="font-mono font-bold">{receiptData.studentId}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-[#172033]/60">Student Name:</span>
+                          <span className="font-bold">{receiptData.studentName || '—'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-[#172033]/60">Course / Trade:</span>
+                          <span className="font-bold text-[#1557C0]">{receiptData.course}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-[#172033]/60">Total Course Fee:</span>
+                          <span>₹{receiptData.feeAmount}</span>
+                        </div>
+                        <div className="flex justify-between font-bold text-[#002760] bg-[#F4F8FD] p-2 rounded-lg">
+                          <span>Amount Received:</span>
+                          <span className="text-emerald-700 font-black">₹{receiptData.feePaid} ({receiptData.paymentMode})</span>
+                        </div>
+                        <div className="flex justify-between text-[#172033]/80">
+                          <span>Balance Remaining:</span>
+                          <span className="font-bold text-amber-800">
+                            ₹{Math.max(0, Number(receiptData.feeAmount || 0) - Number(receiptData.feePaid || 0))}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="pt-6 flex justify-between items-end border-t border-[#E6ECF3] text-[10px] text-[#172033]/70">
+                        <div>
+                          <p>Authorized Institute Stamp</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="h-6"></div>
+                          <p className="border-t border-[#172033]/30 pt-1 font-bold">Principal / Director Signature</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 5: COURSE ADMISSIONS TOGGLE */}
+              {activeAdminTab === 'batches' && (
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-['Manrope'] text-lg font-bold text-[#002760]">
+                      Course Admission Status & Seat Management
+                    </h4>
+                    <p className="text-xs text-[#172033]/70">
+                      Toggle admissions open/closed in real-time across the website.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {courses.map((course) => {
+                      const isOpenNow = courseAdmissions[course.id] !== false;
+                      return (
+                        <div
+                          key={course.id}
+                          className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-2xl p-4 flex justify-between items-center"
+                        >
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-mono font-bold text-[#1557C0]">
+                                {course.code}
+                              </span>
+                              <span className="text-xs text-[#172033]/60">• {course.duration}</span>
+                            </div>
+                            <h5 className="font-['Manrope'] text-sm font-bold text-[#002760] mt-0.5">
+                              {course.name} Trade
+                            </h5>
+                            <p className="text-[11px] text-[#172033]/70 mt-0.5">
+                              Batch Timing: {course.timing} • Capacity: {course.batchCapacity || 30} Seats
+                            </p>
+                          </div>
+
+                          <button
+                            onClick={() => handleToggleAdmission(course.id)}
+                            className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                              isOpenNow
+                                ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
+                                : 'bg-rose-100 hover:bg-rose-200 text-rose-700'
+                            }`}
+                          >
+                            {isOpenNow ? 'Admissions OPEN' : 'CLOSED'}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 6: NOTICE BOARD BROADCASTER */}
+              {activeAdminTab === 'notices' && (
+                <div className="space-y-6">
+                  <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-5 sm:p-6 shadow-xs max-w-xl">
+                    <h4 className="font-['Manrope'] text-base font-black text-[#002760] mb-1">
+                      Broadcast New Announcement
+                    </h4>
+                    <p className="text-xs text-[#172033]/70 mb-4">
+                      Appears instantly on top ticker, announcements section, and student portal.
+                    </p>
+
+                    <form onSubmit={handleCreateNotice} className="space-y-3 text-xs">
+                      <div>
+                        <label className="font-bold text-[#172033]/80 block mb-1">Notice Title (English)</label>
+                        <input
+                          type="text"
+                          value={newNotice.title}
+                          onChange={(e) => setNewNotice({ ...newNotice, title: e.target.value })}
+                          placeholder="e.g. New Electrician Practical Batch Starting Next Week"
+                          className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="font-bold text-[#172033]/80 block mb-1">Notice Title (Marathi)</label>
+                        <input
+                          type="text"
+                          value={newNotice.titleMr}
+                          onChange={(e) => setNewNotice({ ...newNotice, titleMr: e.target.value })}
+                          placeholder="उदा. नवीन इलेक्ट्रिशियन प्रॅक्टिकल बॅच पुढील आठवड्यात सुरू"
+                          className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl font-bold"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="font-bold text-[#172033]/80 block mb-1">Notice Description</label>
+                        <textarea
+                          value={newNotice.description}
+                          onChange={(e) => setNewNotice({ ...newNotice, description: e.target.value })}
+                          rows={3}
+                          placeholder="Detailed instructions for students..."
+                          className="w-full px-3 py-2 bg-white border border-[#CBD5E1] rounded-xl"
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full py-2.5 bg-[#002760] hover:bg-[#1557C0] text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
+                      >
+                        Broadcast Notice to Website
+                      </button>
+
+                      {noticeSuccess && (
+                        <div className="p-2.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-xl text-center">
+                          ✓ Announcement broadcasted successfully!
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB: SECURITY & CHANGE PASSWORD */}
+              {activeAdminTab === 'security' && (
+                <div className="space-y-6">
+                  <div className="bg-[#F8FAFC] border border-[#E6ECF3] rounded-3xl p-6 sm:p-8 max-w-lg shadow-sm">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#002760] text-white flex items-center justify-center">
+                        <span className="material-symbols-outlined text-2xl">lock_reset</span>
+                      </div>
+                      <div>
+                        <h4 className="font-['Manrope'] text-lg font-black text-[#002760]">
+                          Change Admin Password
+                        </h4>
+                        <p className="text-xs text-[#172033]/70">
+                          Set a secure custom passcode for accessing the administration and CMS panel.
+                        </p>
+                      </div>
+                    </div>
+
+                    <form onSubmit={handleChangePassword} className="space-y-4 text-xs">
+                      <div>
+                        <label className="font-bold text-[#172033]/80 block mb-1">
+                          Current Password *
+                        </label>
+                        <input
+                          type="password"
+                          value={currentPasswordInput}
+                          onChange={(e) => setCurrentPasswordInput(e.target.value)}
+                          placeholder="Enter your existing password"
+                          className="w-full px-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl font-bold tracking-wider"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="font-bold text-[#172033]/80 block mb-1">
+                          New Password * (Min 4 characters)
+                        </label>
+                        <input
+                          type="password"
+                          value={newPasswordInput}
+                          onChange={(e) => setNewPasswordInput(e.target.value)}
+                          placeholder="Enter new strong password"
+                          className="w-full px-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl font-bold tracking-wider"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="font-bold text-[#172033]/80 block mb-1">
+                          Confirm New Password *
+                        </label>
+                        <input
+                          type="password"
+                          value={confirmPasswordInput}
+                          onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                          placeholder="Re-type new password"
+                          className="w-full px-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-xl font-bold tracking-wider"
+                          required
+                        />
+                      </div>
+
+                      {passwordChangeError && (
+                        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold rounded-xl">
+                          ⚠️ {passwordChangeError}
+                        </div>
+                      )}
+
+                      {passwordChangeSuccess && (
+                        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold rounded-xl">
+                          {passwordChangeSuccess}
+                        </div>
+                      )}
+
+                      <button
+                        type="submit"
+                        className="w-full py-3 bg-[#002760] hover:bg-[#1557C0] text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
+                      >
+                        <span className="material-symbols-outlined text-base">save</span>
+                        Save & Update Password
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {/* QR Code Sticker Modal */}
+              {selectedQrStudent && selectedQrCodeUrl && (
+                <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-[#001738]/80 backdrop-blur-xs animate-in fade-in duration-150">
+                  <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-[#CBD5E1] text-center space-y-4">
+                    <div className="flex justify-between items-center border-b border-[#E6ECF3] pb-3">
+                      <h4 className="font-['Manrope'] text-sm font-bold text-[#002760]">
+                        Student QR Verification Sticker
+                      </h4>
+                      <button
+                        onClick={() => setSelectedQrStudent(null)}
+                        className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-base">close</span>
+                      </button>
+                    </div>
+
+                    <div className="bg-[#F8FAFC] border-2 border-[#002760] rounded-2xl p-4 space-y-3">
+                      <div className="text-[11px] font-extrabold text-[#002760] uppercase">
+                        Abhinav Technical Institute
+                      </div>
+                      <img
+                        src={selectedQrCodeUrl}
+                        alt="QR Code"
+                        className="w-48 h-48 mx-auto bg-white p-2 rounded-xl shadow-xs border border-[#CBD5E1]"
+                      />
+                      <div className="space-y-0.5">
+                        <div className="font-['Manrope'] text-sm font-black text-[#002760] uppercase">
+                          {selectedQrStudent.studentName}
+                        </div>
+                        <div className="font-mono text-xs font-bold text-[#0284C7]">
+                          {selectedQrStudent.regNumber}
+                        </div>
+                        <div className="text-[11px] font-semibold text-[#475569]">
+                          {selectedQrStudent.courseName}
+                        </div>
+                      </div>
+                      <div className="text-[10px] font-bold text-emerald-700 bg-emerald-50 py-1 rounded-lg">
+                        ✓ Scan to verify online
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          downloadBrandedStudentQrCode(
+                            selectedQrStudent.studentName,
+                            selectedQrStudent.regNumber,
+                            selectedQrStudent.courseName
+                          )
+                        }
+                        className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-base">download</span>
+                        Download PNG
+                      </button>
+                      <button
+                        onClick={() => handlePrintSlip(selectedQrStudent)}
+                        className="flex-1 py-2.5 bg-[#002760] hover:bg-[#1557C0] text-white text-xs font-bold rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-base">print</span>
+                        Print Slip
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
